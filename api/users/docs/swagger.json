@@ -1,0 +1,201 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/api/v1/user": {
+            "post": {
+                "description": "创建新用户",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "创建用户",
+                "parameters": [
+                    {
+                        "description": "创建用户参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.CreateCmd"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "创建成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/user/login": {
+            "post": {
+                "description": "用户登录验证",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "User"
+                ],
+                "summary": "用户登录",
+                "parameters": [
+                    {
+                        "description": "登录参数",
+                        "name": "request",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.QueryByPassword"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "登录成功",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
+                        }
+                    },
+                    "400": {
+                        "description": "请求参数错误",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
+                        }
+                    },
+                    "500": {
+                        "description": "服务器内部错误",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
+                        }
+                    }
+                }
+            }
+        },
+        "/hello": {
+            "get": {
+                "description": "返回 \"hello newb\"",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Hello"
+                ],
+                "summary": "hello Newb",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-string"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.CreateCmd": {
+            "type": "object",
+            "properties": {
+                "createby": {
+                    "type": "string"
+                },
+                "email": {
+                    "type": "string"
+                },
+                "loginname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                },
+                "phone": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.QueryByPassword": {
+            "type": "object",
+            "properties": {
+                "loginname": {
+                    "type": "string"
+                },
+                "password": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.UserDto": {
+            "type": "object"
+        },
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "boolean"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.UserDto"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-string": {
+            "type": "object",
+            "properties": {
+                "code": {
+                    "type": "integer"
+                },
+                "data": {
+                    "type": "string"
+                },
+                "message": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}

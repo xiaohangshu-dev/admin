@@ -1,0 +1,219 @@
+definitions:
+  service_internal_auths_application_wellknown_openid_configuration.OpenIDConfigurationDTO:
+    properties:
+      authorization_endpoint:
+        description: 授权端点 URL
+        type: string
+      authorization_signing_alg_values_supported:
+        description: 授权响应签名算法
+        items:
+          type: string
+        type: array
+      backchannel_logout_session_supported:
+        description: 是否支持后端登出时会话管理
+        type: boolean
+      backchannel_logout_supported:
+        description: 是否支持后端通道登出
+        type: boolean
+      claims_parameter_supported:
+        description: 是否支持 claims 参数
+        type: boolean
+      claims_supported:
+        description: 支持的 Claims
+        items:
+          type: string
+        type: array
+      code_challenge_methods_supported:
+        description: 支持的 PKCE 方法 (如 plain, S256)
+        items:
+          type: string
+        type: array
+      device_authorization_endpoint:
+        description: 设备授权端点（可选）
+        type: string
+      device_code_challenge_methods_supported:
+        description: 设备端点支持的 PKCE 方法
+        items:
+          type: string
+        type: array
+      frontchannel_logout_session_supported:
+        description: 是否支持前端登出时会话管理
+        type: boolean
+      frontchannel_logout_supported:
+        description: 是否支持前端通道登出
+        type: boolean
+      grant_types_supported:
+        description: 支持的授权方式 (如 authorization_code, refresh_token)
+        items:
+          type: string
+        type: array
+      id_token_signing_alg_values_supported:
+        description: ID Token 签名算法
+        items:
+          type: string
+        type: array
+      introspection_endpoint:
+        description: Token Introspection 端点（可选）
+        type: string
+      issuer:
+        description: 发行者标识符 (iss)
+        type: string
+      jwks_uri:
+        description: 公钥集合 (JWKS) URL
+        type: string
+      registration_endpoint:
+        description: 客户端注册端点（可选）
+        type: string
+      require_pushed_authorization_requests:
+        description: 是否强制使用 PAR
+        type: boolean
+      response_types_supported:
+        description: 支持的响应类型
+        items:
+          type: string
+        type: array
+      revocation_endpoint:
+        description: Token 撤销端点（可选）
+        type: string
+      scopes_supported:
+        description: 支持的 Scope
+        items:
+          type: string
+        type: array
+      subject_types_supported:
+        description: 支持的 Subject 类型 (如 "public", "pairwise")
+        items:
+          type: string
+        type: array
+      token_endpoint:
+        description: 令牌端点 URL
+        type: string
+      token_endpoint_auth_methods_supported:
+        description: 支持的 Token 端点认证方式
+        items:
+          type: string
+        type: array
+      userinfo_endpoint:
+        description: 用户信息端点 URL
+        type: string
+      userinfo_signing_alg_values_supported:
+        description: 用户信息签名算法
+        items:
+          type: string
+        type: array
+    type: object
+info:
+  contact: {}
+paths:
+  /.well-known/openid-configuration:
+    get:
+      consumes:
+      - application/json
+      description: 获取OpenID Connect配置
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/service_internal_auths_application_wellknown_openid_configuration.OpenIDConfigurationDTO'
+      summary: OpenidConfiguration
+      tags:
+      - WellKnown
+  /.well-known/openid-configuration/jwks:
+    get:
+      consumes:
+      - application/json
+      description: 获取公钥
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: JWKS
+      tags:
+      - WellKnown
+  /connect/authorize:
+    get:
+      consumes:
+      - application/json
+      description: 授权接口
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Authorize
+      tags:
+      - OAuth2
+  /connect/introspect:
+    get:
+      consumes:
+      - application/json
+      description: 检查token有效性
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Introspect
+      tags:
+      - OAuth2
+  /connect/revoke:
+    get:
+      consumes:
+      - application/json
+      description: 撤销token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Revoke
+      tags:
+      - OAuth2
+  /connect/token:
+    post:
+      consumes:
+      - application/json
+      description: 获取token
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Token
+      tags:
+      - OAuth2
+  /connect/userinfo:
+    get:
+      consumes:
+      - application/json
+      description: 获取用户信息
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            additionalProperties: true
+            type: object
+      summary: Userinfo
+      tags:
+      - OAuth2
+swagger: "2.0"
