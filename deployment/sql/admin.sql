@@ -21,7 +21,6 @@ VALUES (1, 'active'),
     (3, 'locked');
 
 -- 账号表
-
 CREATE TABLE accounts (
     id UUID NOT NULL,
     username VARCHAR(50) NOT NULL,
@@ -31,15 +30,21 @@ CREATE TABLE accounts (
     email VARCHAR(100),
     phone VARCHAR(20),
     pwd TEXT NOT NULL,
+    salt VARCHAR(50),
     slogan VARCHAR(255),
     status SMALLINT NOT NULL DEFAULT 1,
+    gender SMALLINT NOT NULL DEFAULT 1,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
+    create_by UUID  NOT NULL,
     updated_at TIMESTAMPTZ,
+    update_by UUID 
     -- 约束
     CONSTRAINT pk_accounts PRIMARY KEY (id),
     CONSTRAINT uk_accounts_username UNIQUE (username),
     -- 外键约束：状态必须存在于 status 表
     CONSTRAINT fk_accounts_status FOREIGN KEY (status) REFERENCES status (id)
+    -- 外键约束：性别必须存在于 gender 表
+    CONSTRAINT fk_accounts_gender FOREIGN KEY (gender) REFERENCES gender (id)
 );
 -- 账号状态索引
 CREATE INDEX idx_accounts_status ON accounts (status);
@@ -62,11 +67,19 @@ COMMENT ON COLUMN accounts.phone IS '手机号(可空)';
 
 COMMENT ON COLUMN accounts.pwd IS '密码哈希(非空)';
 
+COMMENT ON COLUMN accounts.salt IS '盐(非空)';
+
 COMMENT ON COLUMN accounts.slogan IS '个性签名(非空)';
 
 COMMENT ON COLUMN accounts.status IS '账号状态（非空）';
 
+COMMENT ON COLUMN accounts.gender IS '用户性别（非空）';
+
 COMMENT ON COLUMN accounts.created_at IS '创建时间(非空)';
+
+COMMENT ON COLUMN accounts.create_by IS '创建人(非空)';
+
+COMMENT ON COLUMN accounts.update_by IS '修改人(非空)'
 
 COMMENT ON COLUMN accounts.updated_at IS '更新时间(可空)';
 

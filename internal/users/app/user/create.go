@@ -1,27 +1,37 @@
 package user
 
 import (
-	"github.com/xiaohangshuhub/xiaohangshu/internal/users/domain/account"
+	"context"
+	"errors"
+
+	"github.com/google/uuid"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/dic/gender"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
+
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
 
 // CreateCmd 创建用户命令,包含创建用户所需的信息
 type CreateCmd struct {
-	Loginname string  `json:"loginname"`
-	Password  string  `json:"password"`
-	Createby  string  `json:"createby"`
-	Phone     *string `json:"phone"`
-	Email     *string `json:"email"`
+	Username string        // 用户名
+	Nickname string        // 昵称
+	Roles    []uuid.UUID   // 角色
+	Avatar   string        // 头像
+	Email    *string       // 邮箱
+	Phone    *string       // 手机号
+	Pwd      string        // 密码
+	Salt     string        // 密码盐值
+	Gender   gender.Gender // 性别
 }
 
 type CreateCmdHandler struct {
-	*account.Manager
+	*user.Manager
 	*gorm.DB
 	*zap.Logger
 }
 
-func NewCreateCmdHandler(manager *account.Manager, db *gorm.DB, zap *zap.Logger) *CreateCmdHandler {
+func NewCreateCmdHandler(manager *user.Manager, db *gorm.DB, zap *zap.Logger) *CreateCmdHandler {
 	return &CreateCmdHandler{
 		Manager: manager,
 		DB:      db,
@@ -29,9 +39,15 @@ func NewCreateCmdHandler(manager *account.Manager, db *gorm.DB, zap *zap.Logger)
 	}
 }
 
-func (c *CreateCmdHandler) Handle(cmd CreateCmd) (bool, error) {
+func (c *CreateCmdHandler) Handle(ctx context.Context, cmd CreateCmd) (bool, error) {
 
-	u, err := c.Manager.Create(*cmd.Phone, cmd.Password, cmd.Createby)
+	uid, ok := ctx.Value("UserID").(uuid.UUID)
+
+	if !ok {
+		return false, errors.New("invalid user id in context")
+	}
+
+	u, err := c.Manager.Create(cmd.Username, cmd.Nickname, cmd.Avatar, cmd.Pwd, cmd.Phone, cmd.Email, uid, cmd.Gender, cmd.Roles)
 
 	if err != nil {
 		return false, err
@@ -40,10 +56,10 @@ func (c *CreateCmdHandler) Handle(cmd CreateCmd) (bool, error) {
 	// 保存并记录未知错误
 	if err := c.DB.Create(u).Error; err != nil {
 
-		c.Logger.Error("db create user failed", zap.String("loginname", cmd.Loginname), zap.Error(err))
+		c.Logger.Error("db create user failed", zap.String("loginname", cmd.Username), zap.Error(err))
 
 		// 统一返回业务错误
-		return false, account.ErrUserCreateFailed
+		return false, user.ErrUserCreateFailed
 	}
 
 	return true, nil

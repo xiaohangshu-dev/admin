@@ -1,6 +1,9 @@
 package user
 
 import (
+	"context"
+
+	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -22,7 +25,14 @@ func NewDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *DeleteCmdHandler {
 	}
 }
 
-func (h *DeleteCmdHandler) Handle(cmd DeleteCmd) (bool, error) {
+func (h *DeleteCmdHandler) Handle(ctx context.Context, cmd DeleteCmd) (bool, error) {
+	tx := h.DB.Delete(&user.Account{}, cmd.ID)
+
+	if tx.Error != nil {
+		h.Logger.Error("db delete user failed", zap.String("ID", cmd.ID), zap.Error(tx.Error))
+		// TODO: 后期优化
+		return false, tx.Error
+	}
 
 	return true, nil
 }
