@@ -2,6 +2,7 @@ package user
 
 import (
 	"context"
+	"errors"
 
 	"github.com/google/uuid"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
@@ -39,13 +40,11 @@ func NewCreateCmdHandler(manager *user.Manager, db *gorm.DB, zap *zap.Logger) *C
 
 func (c *CreateCmdHandler) Handle(ctx context.Context, cmd CreateCmd) (bool, error) {
 
-	// uid, ok := ctx.Value("UserID").(uuid.UUID)
+	uid, ok := ctx.Value("UserID").(uuid.UUID)
 
-	// if !ok {
-	// 	return false, errors.New("invalid user id in context")
-	// }
-
-	uid, _ := uuid.Parse("198b6d03-6143-4fb7-866e-2dffaad5affa")
+	if !ok {
+		return false, errors.New("invalid user id in context")
+	}
 
 	u, err := c.Manager.Create(cmd.Username, cmd.Nickname, cmd.Avatar, cmd.Pwd, cmd.Phone, cmd.Email, uid, cmd.Gender, cmd.Roles)
 

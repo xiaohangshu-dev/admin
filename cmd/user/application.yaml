@@ -19,7 +19,7 @@ redis:
   pool_size: 10
 
 database:
-  dsn: "host=localhost port=5432 user=postgres password=xxx dbname=testdb sslmode=disable"
+  dsn: "host=172.16.1.105 user=postgres password=postgres dbname=xiaohangshu port=5432 sslmode=disable TimeZone=Asia/Shanghai"
   log_level: "info"
   slow_threshold: 1s
   dry_run: false

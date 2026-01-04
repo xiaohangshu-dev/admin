@@ -11,12 +11,10 @@ import (
 
 func UserApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *user.App) {
 
-	group := router.Group("/user").WithAuthzPolicies("admin")
+	group := router.Group("/user")
 	{
-		group.GET("", Create(userapp, log))
 		group.POST("", Create(userapp, log))
-		group.PUT("", Create(userapp, log))
-		group.DELETE("", Create(userapp, log))
+
 		group.POST("login", Login(userapp, log)).WithAllowAnonymous()
 	}
 
