@@ -4,12 +4,12 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	u "github.com/xiaohangshuhub/admin/internal/users/app/user"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
+	"github.com/xiaohangshuhub/admin/internal/users/app/user"
+	userDomin "github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 )
 
-func UserApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *u.App) {
+func UserApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *user.App) {
 
 	group := router.Group("/user").WithAuthzPolicies("admin")
 	{
@@ -33,10 +33,10 @@ func UserApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *u.App) {
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
 // @Router /user [post]
-func Create(app *u.App, log *zap.Logger) gin.HandlerFunc {
+func Create(app *user.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var cmd u.CreateCmd
+		var cmd user.CreateCmd
 
 		if err := c.ShouldBindJSON(&cmd); err != nil {
 			log.Warn("参数绑定失败", zap.Error(err))
@@ -46,27 +46,17 @@ func Create(app *u.App, log *zap.Logger) gin.HandlerFunc {
 
 		result, err := app.CreateCmdHandler.Handle(c, cmd)
 
-		if err != nil {
-
-			// 判断是否为可预知的业务错误
-			if userErr, ok := err.(user.Error); ok {
-				switch err {
-				case user.ErrPwdEmpty, user.ErrPhoneAlreadyExist:
-					log.Error("创建用户失败", zap.String("loginname", cmd.Username), zap.Error(err))
-					c.JSON(http.StatusInternalServerError, Fail(user.ErrPwdEmpty.Code, err.Error()))
-				default:
-					log.Error("创建用户失败", zap.String("loginname", cmd.Username), zap.Error(err))
-					c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
-				}
-				return
-			}
-
-			c.JSON(http.StatusInternalServerError, InternalServerError())
-
+		if err == nil {
+			c.JSON(http.StatusOK, Success(result))
 			return
 		}
 
-		c.JSON(http.StatusOK, Success(result))
+		if userErr, ok := err.(*userDomin.Error); ok {
+			log.Error("创建用户失败", zap.String("loginname", cmd.Username), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
+			return
+		}
+		c.JSON(http.StatusInternalServerError, InternalServerError())
 	}
 }
 
@@ -81,10 +71,10 @@ func Create(app *u.App, log *zap.Logger) gin.HandlerFunc {
 // @Failure 400 {object} Response[user.UserDto] "请求参数错误"
 // @Failure 500 {object} Response[user.UserDto] "服务器内部错误"
 // @Router /user/login [post]
-func Login(app *u.App, log *zap.Logger) gin.HandlerFunc {
+func Login(app *user.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
-		var query u.Login
+		var query user.Login
 
 		if err := c.ShouldBindJSON(&query); err != nil {
 			log.Warn("参数绑定失败", zap.Error(err))
@@ -94,26 +84,18 @@ func Login(app *u.App, log *zap.Logger) gin.HandlerFunc {
 
 		result, err := app.LoginHandler.Handle(c, query)
 
-		if err != nil {
-
-			// 判断是否为可预知的业务错误,如果是除密码hash错误外的错误直接返回,hash错误单独处理为密码格式错误
-			if userErr, ok := err.(user.Error); ok {
-				switch err {
-				case user.ErrPasswordInvalid:
-					log.Error("登录失败", zap.String("loginname", query.Phone), zap.Error(err))
-					c.JSON(http.StatusInternalServerError, Fail(user.ErrPasswordInvalid.Code, err.Error()))
-				default:
-					log.Error("登录失败", zap.String("loginname", query.Phone), zap.Error(err))
-					c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
-				}
-				return
-			}
-
-			c.JSON(http.StatusInternalServerError, InternalServerError())
-
+		if err == nil {
+			c.JSON(http.StatusOK, Success(result))
 			return
 		}
 
-		c.JSON(http.StatusOK, Success(result))
+		if userErr, ok := err.(*userDomin.Error); ok {
+			log.Error("登录失败", zap.String("loginname", query.Username), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, InternalServerError())
+
 	}
 }

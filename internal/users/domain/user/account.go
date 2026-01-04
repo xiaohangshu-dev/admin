@@ -4,27 +4,28 @@ import (
 	"time"
 
 	"github.com/google/uuid"
+	"github.com/lib/pq"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/dic/status"
 	"github.com/xiaohangshuhub/go-workit/pkg/ddd"
 )
 
 // Account 描述用户账户领域对象
 type Account struct {
-	ddd.AggregateRoot[uuid.UUID]               // ID
-	Username                     string        // 用户名
-	Nickname                     string        // 昵称
-	Roles                        []uuid.UUID   // 角色
-	Avatar                       string        // 头像
-	Email                        *string       // 邮箱
-	Phone                        *string       // 手机号
-	Pwd                          string        // 密码
-	Salt                         string        // 密码盐值
-	Gender                       Gender        // 性别
-	Status                       status.Status // 状态
-	CreatedAt                    time.Time     // 创建时间
-	CreateBy                     uuid.UUID     // 创建人
-	UpdatedAt                    *time.Time    // 更新时间
-	UpdatedBy                    *uuid.UUID    // 更新人
+	ddd.AggregateRoot[uuid.UUID]                // ID
+	Username                     string         // 用户名
+	Nickname                     string         // 昵称
+	Roles                        pq.StringArray `gorm:"type:uuid[]"` // 角色
+	Avatar                       string         // 头像
+	Email                        *string        // 邮箱
+	Phone                        *string        // 手机号
+	Pwd                          string         // 密码
+	Salt                         string         // 密码盐值
+	Gender                       Gender         // 性别
+	Status                       status.Status  // 状态
+	CreatedAt                    time.Time      // 创建时间
+	CreateBy                     uuid.UUID      // 创建人
+	UpdatedAt                    *time.Time     // 更新时间
+	UpdateBy                     *uuid.UUID     // 更新人
 }
 
 // newAccount 创建账户并返回实例.
@@ -96,6 +97,12 @@ func (a *Account) SetRoles(roles []uuid.UUID) *Error {
 		return ErrUserRoleFailed
 	}
 
+	roleArray := make(pq.StringArray, len(roles))
+
+	for i, id := range roles {
+		roleArray[i] = id.String()
+	}
+	a.Roles = roleArray
 	return nil
 }
 

@@ -15,9 +15,9 @@ const docTemplate = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/user": {
+        "/user": {
             "post": {
-                "description": "创建新用户",
+                "description": "创建新用户123...",
                 "consumes": [
                     "application/json"
                 ],
@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.CreateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd"
                         }
                     }
                 ],
@@ -43,25 +43,25 @@ const docTemplate = `{
                     "200": {
                         "description": "创建成功",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                            "$ref": "#/definitions/internal_users_webapi.Response-bool"
                         }
                     },
                     "400": {
                         "description": "请求参数错误",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                            "$ref": "#/definitions/internal_users_webapi.Response-bool"
                         }
                     },
                     "500": {
                         "description": "服务器内部错误",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool"
+                            "$ref": "#/definitions/internal_users_webapi.Response-bool"
                         }
                     }
                 }
             }
         },
-        "/api/v1/user/login": {
+        "/user/login": {
             "post": {
                 "description": "用户登录验证",
                 "consumes": [
@@ -81,7 +81,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.QueryByPassword"
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.Login"
                         }
                     }
                 ],
@@ -89,42 +89,19 @@ const docTemplate = `{
                     "200": {
                         "description": "登录成功",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
                         }
                     },
                     "400": {
                         "description": "请求参数错误",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
                         }
                     },
                     "500": {
                         "description": "服务器内部错误",
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto"
-                        }
-                    }
-                }
-            }
-        },
-        "/hello": {
-            "get": {
-                "description": "返回 \"hello newb\"",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "Hello"
-                ],
-                "summary": "hello Newb",
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-string"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
                         }
                     }
                 }
@@ -132,41 +109,110 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.CreateCmd": {
+        "github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd": {
             "type": "object",
             "properties": {
-                "createby": {
+                "avatar": {
+                    "description": "头像",
+                    "type": "string"
+                },
+                "email": {
+                    "description": "邮箱",
+                    "type": "string"
+                },
+                "gender": {
+                    "description": "性别",
+                    "allOf": [
+                        {
+                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender"
+                        }
+                    ]
+                },
+                "nickname": {
+                    "description": "昵称",
+                    "type": "string"
+                },
+                "phone": {
+                    "description": "手机号",
+                    "type": "string"
+                },
+                "pwd": {
+                    "description": "密码",
+                    "type": "string"
+                },
+                "roles": {
+                    "description": "角色",
+                    "type": "array",
+                    "items": {
+                        "type": "string"
+                    }
+                },
+                "salt": {
+                    "description": "密码盐值",
+                    "type": "string"
+                },
+                "username": {
+                    "description": "用户名",
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_admin_internal_users_app_user.Login": {
+            "type": "object",
+            "properties": {
+                "password": {
+                    "type": "string"
+                },
+                "username": {
+                    "type": "string"
+                }
+            }
+        },
+        "github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto": {
+            "type": "object",
+            "properties": {
+                "access_token": {
                     "type": "string"
                 },
                 "email": {
                     "type": "string"
                 },
-                "loginname": {
-                    "type": "string"
-                },
-                "password": {
+                "nikename": {
                     "type": "string"
                 },
                 "phone": {
                     "type": "string"
-                }
-            }
-        },
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.QueryByPassword": {
-            "type": "object",
-            "properties": {
-                "loginname": {
-                    "type": "string"
                 },
-                "password": {
+                "username": {
                     "type": "string"
                 }
             }
         },
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.UserDto": {
-            "type": "object"
+        "github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender": {
+            "type": "integer",
+            "format": "int32",
+            "enum": [
+                1,
+                2,
+                3
+            ],
+            "x-enum-comments": {
+                "Female": "女",
+                "Male": "男",
+                "Unknown": "保密"
+            },
+            "x-enum-descriptions": [
+                "保密",
+                "男",
+                "女"
+            ],
+            "x-enum-varnames": [
+                "Unknown",
+                "Male",
+                "Female"
+            ]
         },
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-bool": {
+        "internal_users_webapi.Response-bool": {
             "type": "object",
             "properties": {
                 "code": {
@@ -180,28 +226,14 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp_UserDto": {
+        "internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/github_com_xiaohangshuhub_xiaohangshu_internal_users_app_features_userapp.UserDto"
-                },
-                "message": {
-                    "type": "string"
-                }
-            }
-        },
-        "github_com_xiaohangshuhub_xiaohangshu_internal_users_webapi_response.Response-string": {
-            "type": "object",
-            "properties": {
-                "code": {
-                    "type": "integer"
-                },
-                "data": {
-                    "type": "string"
+                    "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto"
                 },
                 "message": {
                     "type": "string"

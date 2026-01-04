@@ -18,8 +18,8 @@ INSERT INTO
     status (id, name)
 VALUES (1, 'active'),
     (2, 'disabled'),
-    (3, 'locked');
-
+    (3, 'locked'),
+    (4, 'delete');
 
 -- 性别表
 CREATE TABLE gender (
@@ -65,13 +65,12 @@ VALUES (1, '菜单目录'),
     (2, '菜单项'),
     (3, '操作');
 
-
 -- 账号表
 CREATE TABLE accounts (
     id UUID NOT NULL,
     username VARCHAR(50) NOT NULL,
     nickname VARCHAR(50),
-    roles SMALLINT[] NOT NULL,
+    roles UUID [] NOT NULL,
     avatar TEXT NOT NULL,
     email VARCHAR(100),
     phone VARCHAR(20),
@@ -81,14 +80,14 @@ CREATE TABLE accounts (
     status SMALLINT NOT NULL DEFAULT 1,
     gender SMALLINT NOT NULL DEFAULT 1,
     created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    create_by UUID  NOT NULL,
+    create_by UUID NOT NULL,
     updated_at TIMESTAMPTZ,
-    update_by UUID 
+    update_by UUID,
     -- 约束
     CONSTRAINT pk_accounts PRIMARY KEY (id),
     CONSTRAINT uk_accounts_username UNIQUE (username),
     -- 外键约束：状态必须存在于 status 表
-    CONSTRAINT fk_accounts_status FOREIGN KEY (status) REFERENCES status (id)
+    CONSTRAINT fk_accounts_status FOREIGN KEY (status) REFERENCES status (id),
     -- 外键约束：性别必须存在于 gender 表
     CONSTRAINT fk_accounts_gender FOREIGN KEY (gender) REFERENCES gender (id)
 );
@@ -168,5 +167,3 @@ VALUES (
         '超级管理员',
         NULL
     );
-
-

@@ -1,6 +1,7 @@
 package user
 
 import (
+	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -20,25 +21,7 @@ func NewManager(db *gorm.DB) *Manager {
 }
 
 // Create 创建一个新的用户账号,返回用户账号对象或错误信息。
-func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, *Error) {
-
-	// 外部业务规则校验
-	account := &Account{}
-	m.Where("username = ?", username).First(account)
-
-	// 用户名唯一校验
-	if account.ID != uuid.Nil {
-		return nil, ErrUserAlreadyExists
-	}
-
-	// 手机号唯一校验
-	if phone != nil {
-		m.Where("phone = ?", phone).First(account)
-
-		if account.ID != uuid.Nil {
-			return nil, ErrPhoneAlreadyExist
-		}
-	}
+func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, error) {
 
 	// 内部业务规则校验
 	account, err := newAccount(uuid.New(), username, nickname, avatar, pwd, createBy, gender, roles)
@@ -51,29 +34,37 @@ func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *s
 	account.Phone = phone
 	account.Email = email
 
+	// 外部业务规则校验
+	if err := m.Where("username = ?", username).First(&Account{}).Error; err == nil {
+		return nil, ErrUserAlreadyExists
+	} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+		return nil, err
+	}
+
+	if phone != nil {
+		if err := m.Where("phone = ?", *phone).First(&Account{}).Error; err == nil {
+			return nil, ErrPhoneAlreadyExist
+		} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, err
+		}
+	}
+
 	return account, nil
 }
 
 // Update 修改用户账号信息,返回修改后的用户账号或错误信息
-func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *string, updateBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, *Error) {
+func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *string, updateBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, error) {
 
 	account := &Account{}
-	m.First(account, id)
 
-	// 用户是否存在
-	if account.ID == uuid.Nil {
-		return nil, ErrUserNotFound
-	}
-
-	// 手机号唯一校验
-	if phone != nil {
-		m.Where("phone = ? && id != ?", phone, id).First(account)
-
-		if account.ID != uuid.Nil {
-			return nil, ErrPhoneAlreadyExist
+	if err := m.Where("id = ?", id).First(account).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrUserNotFound
 		}
+		return nil, err
 	}
 
+	// 内部业务规则校验
 	if err := account.SetNickname(nickname); err != nil {
 		return account, err
 	}
@@ -86,27 +77,43 @@ func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *st
 		return account, err
 	}
 
-	// 无需校验的参数进行赋值
+	// 无需校验参数赋值
 	account.Phone = phone
 	account.Email = email
+	account.Gender = gender
+	account.UpdateBy = &updateBy
+
+	// 外部业务规则校验
+	if phone != nil {
+		if err := m.Where("phone = ? AND id <> ?", *phone, id).First(&Account{}).Error; err == nil {
+			return nil, ErrPhoneAlreadyExist
+		} else if !errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, err
+		}
+	}
 
 	return account, nil
 }
 
 // UpdatePwd 修改密码,返回修改密码后的账户信息或者错误
-func (m *Manager) UpdatePwd(id uuid.UUID, pwd string, updateBy uuid.UUID) (*Account, *Error) {
+func (m *Manager) UpdatePwd(id uuid.UUID, pwd string, updateBy uuid.UUID) (*Account, error) {
 
 	account := &Account{}
-	m.First(account, id)
-	// 用户是否存在
-	if account.ID == uuid.Nil {
-		return nil, ErrUserNotFound
+
+	if err := m.First(account, "id = ?", id).Error; err != nil {
+		if errors.Is(err, gorm.ErrRecordNotFound) {
+			return nil, ErrUserNotFound
+		}
+		return nil, err
 	}
+
 	if err := account.SetPassword(pwd); err != nil {
 		return account, err
 	}
-	time := time.Now()
-	account.UpdatedAt = &time
-	account.UpdatedBy = &updateBy
+
+	now := time.Now()
+	account.UpdatedAt = &now
+	account.UpdateBy = &updateBy
+
 	return account, nil
 }
