@@ -24,7 +24,7 @@ func NewManager(db *gorm.DB) *Manager {
 func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, error) {
 
 	// 内部业务规则校验
-	account, err := newAccount(uuid.New(), username, nickname, avatar, pwd, createBy, gender, roles)
+	account, err := newAccount(username, nickname, avatar, pwd, createBy, gender, roles)
 
 	if err != nil {
 		return nil, err

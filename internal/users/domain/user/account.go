@@ -29,44 +29,36 @@ type Account struct {
 }
 
 // newAccount 创建账户并返回实例.
-func newAccount(id uuid.UUID, username, nickname, avatar, pwd string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, *Error) {
+func newAccount(username, nickname, avatar, pwd string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, *Error) {
 
-	// 业务规则校验
-	if id == uuid.Nil {
-		return nil, ErrIDEmpty
+	account := &Account{
+		AggregateRoot: ddd.NewAggregateRoot(uuid.New()),
+		Status:        status.Enable,
+		Gender:        gender,
+		CreatedAt:     time.Now(),
 	}
+	// 业务规则校验
 	if username == "" {
 		return nil, ErrUsernameEmpty
+	}
+	if err := account.SetPassword(pwd); err != nil {
+		return account, nil
+	}
+	if err := account.SetNickname(nickname); err != nil {
+		return account, err
+	}
+	if err := account.SetAvatar(avatar); err != nil {
+		return account, err
+	}
+	if err := account.SetRoles(roles); err != nil {
+		return account, err
 	}
 	if createBy == uuid.Nil {
 		return nil, ErrCreateByEmpty
 	}
-
-	account := &Account{
-		AggregateRoot: ddd.NewAggregateRoot(id),
-		Username:      username,
-		Status:        status.Enable,
-		Gender:        gender,
-		CreatedAt:     time.Now(),
-		CreateBy:      createBy,
-	}
-
-	if err := account.SetPassword(pwd); err != nil {
-		return account, nil
-	}
-
-	if err := account.SetNickname(nickname); err != nil {
-		return account, err
-	}
-
-	if err := account.SetAvatar(avatar); err != nil {
-		return account, err
-	}
-
-	if err := account.SetRoles(roles); err != nil {
-		return account, err
-	}
-
+	// 赋值
+	account.Username = username
+	account.CreateBy = createBy
 	return account, nil
 }
 
