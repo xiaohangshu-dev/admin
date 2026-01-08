@@ -2,6 +2,7 @@ package user
 
 import "errors"
 
+// Error 定义了用户领域(10000-19999)的错误类型
 type Error struct {
 	Err  error
 	Code int
