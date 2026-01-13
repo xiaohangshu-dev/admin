@@ -4,9 +4,9 @@ go 1.25
 
 require (
 	github.com/google/uuid v1.6.0
-	github.com/spf13/viper v1.21.0
+	github.com/spf13/viper v1.21.0 // indirect
 	github.com/swaggo/swag v1.16.6
-	github.com/xiaohangshuhub/go-workit v0.0.0-20251127064825-5543cc477c65
+	github.com/xiaohangshuhub/go-workit v0.0.0-20260113021754-78fd6ad6ac0a
 	go.uber.org/fx v1.24.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.73.0
@@ -69,7 +69,6 @@ require (
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.3.0 // indirect
 	github.com/leodido/go-urn v1.4.0 // indirect
-	github.com/lib/pq v1.10.9
 	github.com/mailru/easyjson v0.7.7 // indirect
 	github.com/mattn/go-isatty v0.0.20 // indirect
 	github.com/mehdihadeli/go-mediatr v1.3.2 // indirect

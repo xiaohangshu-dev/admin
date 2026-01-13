@@ -1,10 +1,7 @@
 package user
 
 import (
-	"time"
-
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/dic/status"
 	"github.com/xiaohangshuhub/go-workit/pkg/ddd"
 )
@@ -19,31 +16,27 @@ const (
 
 // Account 描述用户账户领域对象
 type Account struct {
-	ddd.AggregateRoot[uuid.UUID]                // ID
-	Username                     string         // 用户名
-	Nickname                     string         // 昵称
-	Roles                        pq.StringArray `gorm:"type:uuid[]"` // 角色
-	Avatar                       string         // 头像
-	Email                        *string        // 邮箱
-	Phone                        *string        // 手机号
-	Pwd                          string         // 密码
-	Salt                         string         // 密码盐值
-	Gender                       Gender         // 性别
-	Status                       status.Status  // 状态
-	CreatedAt                    time.Time      // 创建时间
-	CreateBy                     uuid.UUID      // 创建人
-	UpdatedAt                    *time.Time     // 更新时间
-	UpdateBy                     *uuid.UUID     // 更新人
+	ddd.AggregateRoot[uuid.UUID]               // ID
+	Username                     string        // 用户名
+	Nickname                     string        // 昵称
+	Avatar                       string        // 头像
+	Email                        *string       // 邮箱
+	Phone                        *string       // 手机号
+	Pwd                          string        // 密码
+	Salt                         string        // 密码盐值
+	Gender                       Gender        // 性别
+	Status                       status.Status // 状态
+	CreateBy                     uuid.UUID     // 创建人
+	UpdateBy                     *uuid.UUID    // 更新人
 }
 
 // newAccount 创建账户并返回实例.
-func newAccount(username, nickname, avatar, pwd string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, *Error) {
+func newAccount(username, nickname, avatar, pwd string, createBy uuid.UUID, gender Gender) (*Account, *Error) {
 
 	account := &Account{
 		AggregateRoot: ddd.NewAggregateRoot(uuid.New()),
 		Status:        status.Enable,
 		Gender:        gender,
-		CreatedAt:     time.Now(),
 	}
 	// 业务规则校验
 	if username == "" {
@@ -56,9 +49,6 @@ func newAccount(username, nickname, avatar, pwd string, createBy uuid.UUID, gend
 		return account, err
 	}
 	if err := account.SetAvatar(avatar); err != nil {
-		return account, err
-	}
-	if err := account.SetRoles(roles); err != nil {
 		return account, err
 	}
 	if createBy == uuid.Nil {
@@ -87,22 +77,6 @@ func (a *Account) SetAvatar(avatar string) *Error {
 	}
 	a.Avatar = avatar
 
-	return nil
-}
-
-// 设置角色
-func (a *Account) SetRoles(roles []uuid.UUID) *Error {
-
-	if len(roles) == 0 {
-		return ErrUserRoleFailed
-	}
-
-	roleArray := make(pq.StringArray, len(roles))
-
-	for i, id := range roles {
-		roleArray[i] = id.String()
-	}
-	a.Roles = roleArray
 	return nil
 }
 

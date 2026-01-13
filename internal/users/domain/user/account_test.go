@@ -16,7 +16,7 @@ func Test_newAccount_should_return_account_and_nil_error(t *testing.T) {
 	avatar := "http://www.example.com/avatar.jpg"
 
 	// 调用 newAccount() 方法
-	account, error := newAccount(username, nickname, avatar, password, uuid.New(), Male, []uuid.UUID{uuid.New()})
+	account, error := newAccount(username, nickname, avatar, password, uuid.New(), Male)
 
 	// 断言
 	if error != nil || account == nil {

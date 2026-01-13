@@ -21,10 +21,10 @@ func NewManager(db *gorm.DB) *Manager {
 }
 
 // Create 创建一个新的用户账号,返回用户账号对象或错误信息。
-func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *string, createBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, error) {
+func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *string, createBy uuid.UUID, gender Gender) (*Account, error) {
 
 	// 内部业务规则校验
-	account, err := newAccount(username, nickname, avatar, pwd, createBy, gender, roles)
+	account, err := newAccount(username, nickname, avatar, pwd, createBy, gender)
 
 	if err != nil {
 		return nil, err
@@ -53,7 +53,7 @@ func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *s
 }
 
 // Update 修改用户账号信息,返回修改后的用户账号或错误信息
-func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *string, updateBy uuid.UUID, gender Gender, roles []uuid.UUID) (*Account, error) {
+func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *string, updateBy uuid.UUID, gender Gender) (*Account, error) {
 
 	account := &Account{}
 
@@ -70,10 +70,6 @@ func (m *Manager) Update(id uuid.UUID, nickname, avatar string, phone, email *st
 	}
 
 	if err := account.SetAvatar(avatar); err != nil {
-		return account, err
-	}
-
-	if err := account.SetRoles(roles); err != nil {
 		return account, err
 	}
 

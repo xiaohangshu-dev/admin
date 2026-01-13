@@ -14,7 +14,6 @@ import (
 type UpdateCmd struct {
 	ID       uuid.UUID   `json:"id"`
 	Nikename string      `json:"nikename"`
-	Roles    []uuid.UUID `json:"roles"`
 	Avatar   string      `json:"avatar"`
 	Email    *string     `json:"email"`
 	Phone    *string     `json:"phone"`
@@ -45,7 +44,7 @@ func (h *UpdateCmdHandler) Handle(ctx context.Context, cmd UpdateCmd) (bool, err
 		return false, errors.New("invalid user id in context")
 	}
 
-	account, err := h.Manager.Update(cmd.ID, cmd.Nikename, cmd.Avatar, cmd.Phone, cmd.Email, uid, cmd.Gender, cmd.Roles)
+	account, err := h.Manager.Update(cmd.ID, cmd.Nikename, cmd.Avatar, cmd.Phone, cmd.Email, uid, cmd.Gender)
 
 	if err != nil {
 		return false, err

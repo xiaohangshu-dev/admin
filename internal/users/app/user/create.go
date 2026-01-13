@@ -15,7 +15,6 @@ import (
 type CreateCmd struct {
 	Username string      // 用户名
 	Nickname string      // 昵称
-	Roles    []uuid.UUID // 角色
 	Avatar   string      // 头像
 	Email    *string     // 邮箱
 	Phone    *string     // 手机号
@@ -46,7 +45,7 @@ func (c *CreateCmdHandler) Handle(ctx context.Context, cmd CreateCmd) (bool, err
 		return false, errors.New("invalid user id in context")
 	}
 
-	u, err := c.Manager.Create(cmd.Username, cmd.Nickname, cmd.Avatar, cmd.Pwd, cmd.Phone, cmd.Email, uid, cmd.Gender, cmd.Roles)
+	u, err := c.Manager.Create(cmd.Username, cmd.Nickname, cmd.Avatar, cmd.Pwd, cmd.Phone, cmd.Email, uid, cmd.Gender)
 
 	if err != nil {
 		return false, err

@@ -2,6 +2,7 @@ package function
 
 import (
 	"errors"
+	"time"
 
 	"github.com/google/uuid"
 	"gorm.io/gorm"
@@ -69,8 +70,9 @@ func (m *Manager) Update(id uuid.UUID, name, route, icon, desc string, weight in
 		return nil, err
 	}
 	// 无需校验参数赋值
+	now := time.Now()
 	fun.ParentID = parentID
-
+	fun.UpdatedAt = &now
 	// 外部业务规则校验
 	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&Function{}).Error; err == nil {
 		return nil, ErrFunctionAlreadyExists
