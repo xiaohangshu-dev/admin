@@ -44,12 +44,8 @@ func (h *UpdatePwdCmdHandler) Handle(ctx context.Context, cmd UpdatePwdCmd) (boo
 		return false, err
 	}
 
-	tx := h.DB.Save(account)
-
-	if tx.Error != nil {
-		// TODO: 后续优化
+	if tx := h.DB.Save(account); tx.Error != nil {
 		return false, tx.Error
 	}
-
 	return true, nil
 }

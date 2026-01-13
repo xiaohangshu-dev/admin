@@ -5,6 +5,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/perm"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -20,19 +21,22 @@ type UpdateCmd struct {
 	Pwd      string      `json:"pwd"`
 	Salt     string      `json:"salt"`
 	Gender   user.Gender `json:"gender"`
+	Roles    []uuid.UUID `json:"roles"`
 }
 
 type UpdateCmdHandler struct {
-	*user.Manager
+	um *user.Manager
+	pm *perm.Manager
 	*gorm.DB
 	*zap.Logger
 }
 
-func NewUpdateCmdHandler(m *user.Manager, repo *gorm.DB, zap *zap.Logger) *UpdateCmdHandler {
+func NewUpdateCmdHandler(um *user.Manager, pm *perm.Manager, repo *gorm.DB, zap *zap.Logger) *UpdateCmdHandler {
 	return &UpdateCmdHandler{
-		Manager: m,
-		DB:      repo,
-		Logger:  zap,
+		um:     um,
+		pm:     pm,
+		DB:     repo,
+		Logger: zap,
 	}
 }
 
@@ -44,17 +48,18 @@ func (h *UpdateCmdHandler) Handle(ctx context.Context, cmd UpdateCmd) (bool, err
 		return false, errors.New("invalid user id in context")
 	}
 
-	account, err := h.Manager.Update(cmd.ID, cmd.Nikename, cmd.Avatar, cmd.Phone, cmd.Email, uid, cmd.Gender)
+	account, err := h.um.Update(cmd.ID, cmd.Nikename, cmd.Avatar, cmd.Phone, cmd.Email, uid, cmd.Gender)
 
 	if err != nil {
 		return false, err
 	}
 
-	tx := h.DB.Save(account)
-
-	if tx.Error != nil {
-		// TODO: 后续优化
+	if tx := h.DB.Save(account); tx.Error != nil {
 		return false, tx.Error
+	}
+
+	if err := h.pm.ConfigureUserRoles(account.ID, cmd.Roles); err != nil {
+		return false, err
 	}
 
 	return true, nil

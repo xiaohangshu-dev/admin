@@ -1,4 +1,4 @@
-package function
+package perm
 
 import (
 	"github.com/google/uuid"
@@ -17,8 +17,8 @@ const (
 	Action                   // 操作
 )
 
-// Function 功能
-type Function struct {
+// Permission 功能
+type Permission struct {
 	ddd.AggregateRoot[uuid.UUID]               // ID
 	Name                         string        // 名称
 	Type                         Type          // 功能类型
@@ -30,12 +30,12 @@ type Function struct {
 	Status                       status.Status // 状态
 }
 
-// newFunction 创建功能
-func newFunction(name, route, icon, desc string, weight int32, ftype Type) (*Function, *Error) {
+// newPermission 创建功能
+func newPermission(name, route, icon, desc string, weight int32, ptype Type) (*Permission, *Error) {
 
-	fun := &Function{
+	fun := &Permission{
 		AggregateRoot: ddd.NewAggregateRoot(uuid.New()),
-		Type:          ftype,
+		Type:          ptype,
 		Weight:        weight,
 	}
 
@@ -57,7 +57,7 @@ func newFunction(name, route, icon, desc string, weight int32, ftype Type) (*Fun
 }
 
 // SetName 设置名称
-func (f *Function) SetName(name string) *Error {
+func (f *Permission) SetName(name string) *Error {
 	if name == "" {
 		return ErrNameEmpty
 	}
@@ -66,7 +66,7 @@ func (f *Function) SetName(name string) *Error {
 }
 
 // SetRoute 设置路由
-func (f *Function) SetRoute(route string) *Error {
+func (f *Permission) SetRoute(route string) *Error {
 	if route == "" {
 		return ErrRouteEmpty
 	}
@@ -75,7 +75,7 @@ func (f *Function) SetRoute(route string) *Error {
 }
 
 // SetIcon 设置图标
-func (f *Function) SetIcon(icon string) *Error {
+func (f *Permission) SetIcon(icon string) *Error {
 	if icon == "" {
 		return ErrIconEmpty
 	}
@@ -84,7 +84,7 @@ func (f *Function) SetIcon(icon string) *Error {
 }
 
 // SetDesc 设置描述
-func (f *Function) SetDesc(desc string) *Error {
+func (f *Permission) SetDesc(desc string) *Error {
 	if desc == "" {
 		return ErrDescEmpty
 	}

@@ -3,11 +3,21 @@ package user
 type App struct {
 	*CreateCmdHandler
 	*LoginHandler
+	*DeleteCmdHandler
+	*UpdateCmdHandler
+	*UpdatePwdCmdHandler
 }
 
-func NewUserApp(createHandler *CreateCmdHandler, loginHandler *LoginHandler) *App {
+func NewApp(
+	createHandler *CreateCmdHandler, loginHandler *LoginHandler,
+	deleteHandler *DeleteCmdHandler, updateHandler *UpdateCmdHandler,
+	updatePwdHandler *UpdatePwdCmdHandler) *App {
+
 	return &App{
-		CreateCmdHandler: createHandler,
-		LoginHandler:     loginHandler,
+		CreateCmdHandler:    createHandler,
+		LoginHandler:        loginHandler,
+		DeleteCmdHandler:    deleteHandler,
+		UpdateCmdHandler:    updateHandler,
+		UpdatePwdCmdHandler: updatePwdHandler,
 	}
 }

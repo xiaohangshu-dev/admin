@@ -13,7 +13,7 @@ type Manager struct {
 	*gorm.DB
 }
 
-// NewUserManager 返回用户领域服务实例
+// NewManager 返回用户领域服务实例
 func NewManager(db *gorm.DB) *Manager {
 	return &Manager{
 		DB: db,
