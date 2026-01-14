@@ -1,11 +1,11 @@
-package perm
+package roleperm
 
 import (
 	"context"
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/perm"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -20,13 +20,13 @@ type RoleCreateCmd struct {
 }
 
 type RoleCreateCmdHandler struct {
-	*perm.Manager
+	*roleperm.Manager
 	*gorm.DB
 	*zap.Logger
 }
 
 // NewRoleCreateCmdHandler 返回创建角色命令处理器
-func NewRoleCreateCmdHandler(manager *perm.Manager, db *gorm.DB, zap *zap.Logger) *RoleCreateCmdHandler {
+func NewRoleCreateCmdHandler(manager *roleperm.Manager, db *gorm.DB, zap *zap.Logger) *RoleCreateCmdHandler {
 	return &RoleCreateCmdHandler{
 		Manager: manager,
 		DB:      db,
@@ -37,13 +37,13 @@ func NewRoleCreateCmdHandler(manager *perm.Manager, db *gorm.DB, zap *zap.Logger
 // Handle 处理创建角色命令
 func (c *RoleCreateCmdHandler) Handle(ctx context.Context, cmd RoleCreateCmd) (bool, error) {
 
-	uid, ok := ctx.Value("UserID").(uuid.UUID)
+	uid, ok := ctx.Value("UserID").(string)
 
 	if !ok {
 		return false, errors.New("invalid user id in context")
 	}
 
-	r, err := c.Manager.CreateRole(cmd.Role, cmd.Name, cmd.ParentID, uid)
+	r, err := c.Manager.CreateRole(cmd.Role, cmd.Name, uid, cmd.ParentID)
 
 	if err != nil {
 		return false, err

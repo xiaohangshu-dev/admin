@@ -1,9 +1,9 @@
-package perm
+package roleperm
 
 import (
 	"context"
 
-	"github.com/xiaohangshuhub/admin/internal/users/domain/perm"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -27,7 +27,7 @@ func NewPermDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *PermDeleteCmdHandl
 
 func (h *PermDeleteCmdHandler) Handle(ctx context.Context, cmd PermDeleteCmd) (bool, error) {
 
-	if tx := h.DB.Delete(&perm.Permission{}, cmd.ID); tx.Error != nil {
+	if tx := h.DB.Delete(&roleperm.RolePermission{}, cmd.ID); tx.Error != nil {
 		h.Logger.Error("db delete user failed", zap.String("ID", cmd.ID), zap.Error(tx.Error))
 		return false, tx.Error
 	}

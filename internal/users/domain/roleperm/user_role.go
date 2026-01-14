@@ -1,4 +1,4 @@
-package perm
+package roleperm
 
 import (
 	"github.com/google/uuid"

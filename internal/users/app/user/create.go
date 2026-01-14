@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/perm"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
 
 	"go.uber.org/zap"
@@ -27,13 +27,13 @@ type CreateCmd struct {
 
 type CreateCmdHandler struct {
 	um *user.Manager
-	pm *perm.Manager
+	pm *roleperm.Manager
 	*gorm.DB
 	*zap.Logger
 }
 
 // NewCreateCmdHandler 返回创建用户命令处理器
-func NewCreateCmdHandler(um *user.Manager, pm *perm.Manager, db *gorm.DB, zap *zap.Logger) *CreateCmdHandler {
+func NewCreateCmdHandler(um *user.Manager, pm *roleperm.Manager, db *gorm.DB, zap *zap.Logger) *CreateCmdHandler {
 	return &CreateCmdHandler{
 		um:     um,
 		pm:     pm,

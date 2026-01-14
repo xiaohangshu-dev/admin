@@ -1,4 +1,4 @@
-package perm
+package roleperm
 
 import (
 	"errors"
@@ -21,7 +21,7 @@ func NewManager(db *gorm.DB) *Manager {
 }
 
 // CreatePremission 创建权限
-func (m *Manager) CreatePremission(name, route, icon, desc string, weight int32, ptype Type, parentID *uuid.UUID, createBy uuid.UUID) (*Permission, error) {
+func (m *Manager) CreatePremission(name, route, icon, desc, createBy string, weight int32, ptype Type, parentID *uuid.UUID) (*RolePermission, error) {
 
 	// 内部业务规则校验
 	fun, err := newPermission(name, route, icon, desc, weight, ptype)
@@ -34,7 +34,7 @@ func (m *Manager) CreatePremission(name, route, icon, desc string, weight int32,
 	fun.ParentID = parentID
 
 	// 外部业务规则校验
-	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&Permission{}).Error; err == nil {
+	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&RolePermission{}).Error; err == nil {
 		return nil, ErrFunctionAlreadyExists
 	}
 
@@ -42,9 +42,9 @@ func (m *Manager) CreatePremission(name, route, icon, desc string, weight int32,
 }
 
 // updatePermission 更新权限
-func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc string, weight int32, ptype Type, parentID *uuid.UUID, updateBy uuid.UUID) (*Permission, error) {
+func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc, updateBy string, weight int32, ptype Type, parentID *uuid.UUID) (*RolePermission, error) {
 
-	perm := &Permission{}
+	perm := &RolePermission{}
 
 	if err := m.Where("id = ?", id).First(perm).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -75,7 +75,7 @@ func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc string,
 	perm.UpdatedAt = &now
 	perm.Type = ptype
 	// 外部业务规则校验
-	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&Permission{}).Error; err == nil {
+	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&RolePermission{}).Error; err == nil {
 		return nil, ErrFunctionAlreadyExists
 	}
 
@@ -83,9 +83,9 @@ func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc string,
 }
 
 // CreateRole 创建角色
-func (m *Manager) CreateRole(role, name string, parentID, createBy uuid.UUID) (*Role, error) {
+func (m *Manager) CreateRole(role, name, createBy string, parentID uuid.UUID) (*Role, error) {
 	// 内部业务规则校验
-	r, err := newRole(role, name, parentID, createBy)
+	r, err := newRole(role, name, createBy, parentID)
 	if err != nil {
 		return nil, err
 	}
@@ -99,7 +99,7 @@ func (m *Manager) CreateRole(role, name string, parentID, createBy uuid.UUID) (*
 }
 
 // UpdateRole 更新角色
-func (m *Manager) UpdateRole(id uuid.UUID, role, name string, parentID, updateBy uuid.UUID) (*Role, error) {
+func (m *Manager) UpdateRole(id uuid.UUID, role, name, updateBy string, parentID uuid.UUID) (*Role, error) {
 
 	// 查询角色
 	r := &Role{}

@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/perm"
+	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -26,12 +26,12 @@ type UpdateCmd struct {
 
 type UpdateCmdHandler struct {
 	um *user.Manager
-	pm *perm.Manager
+	pm *roleperm.Manager
 	*gorm.DB
 	*zap.Logger
 }
 
-func NewUpdateCmdHandler(um *user.Manager, pm *perm.Manager, repo *gorm.DB, zap *zap.Logger) *UpdateCmdHandler {
+func NewUpdateCmdHandler(um *user.Manager, pm *roleperm.Manager, repo *gorm.DB, zap *zap.Logger) *UpdateCmdHandler {
 	return &UpdateCmdHandler{
 		um:     um,
 		pm:     pm,

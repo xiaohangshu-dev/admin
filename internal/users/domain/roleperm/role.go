@@ -1,4 +1,4 @@
-package perm
+package roleperm
 
 import (
 	"github.com/google/uuid"
@@ -11,13 +11,13 @@ type Role struct {
 	Role                         string        // 角色
 	Name                         string        // 名称
 	ParentID                     uuid.UUID     // 父级ID
-	CreateBy                     uuid.UUID     // 创建人
-	UpdateBy                     uuid.UUID     // 更新人
+	CreateBy                     string        // 创建人
+	UpdateBy                     *string       // 更新人
 	Status                       status.Status // 状态
 }
 
 // newRole 创建角色
-func newRole(role, name string, parentID, createBy uuid.UUID) (*Role, *Error) {
+func newRole(role, name, createBy string, parentID uuid.UUID) (*Role, *Error) {
 	r := &Role{
 		AggregateRoot: ddd.NewAggregateRoot(uuid.New()),
 		Status:        status.Enable,
@@ -32,7 +32,7 @@ func newRole(role, name string, parentID, createBy uuid.UUID) (*Role, *Error) {
 	if r.SetParentID(parentID) != nil {
 		return nil, ErrNameEmpty
 	}
-	if createBy == uuid.Nil {
+	if createBy == "" {
 		return nil, ErrNameEmpty
 	}
 	return r, nil

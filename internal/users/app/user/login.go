@@ -33,12 +33,11 @@ func (h *LoginHandler) Handle(ctx context.Context, req Login) (UserDto, error) {
 
 	var acc user.Account
 
-	err := h.Where("username = ? OR phone = ? OR email = ?", req.Username, req.Username, req.Username).First(&acc).Error
-	if err != nil {
-		if errors.Is(err, gorm.ErrRecordNotFound) {
+	if result := h.Where("username = ? OR phone = ? OR email = ?", req.Username, req.Username, req.Username).First(&acc); result.Error != nil {
+		if errors.Is(result.Error, gorm.ErrRecordNotFound) {
 			return UserDto{}, user.ErrUserNotFound
 		}
-		return UserDto{}, err
+		return UserDto{}, result.Error
 	}
 
 	if !acc.CheckPassword(req.Password) {
