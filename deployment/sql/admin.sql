@@ -155,11 +155,11 @@ COMMENT ON COLUMN roles.permissions IS '权限(可空)';
 COMMENT ON COLUMN roles.status IS '状态';
 
 INSERT INTO roles (id, role, name, parent_id) VALUES (
-        'a80b3690-50be-463f-81fa-eb135c0a84ae',
-        'superadmin',
-        '超级管理员',
-        NULL
-    );
+'a80b3690-50be-463f-81fa-eb135c0a84ae',
+'superadmin',
+'超级管理员',
+NULL
+);
 
 -- 权限表
 CREATE TABLE permissions (

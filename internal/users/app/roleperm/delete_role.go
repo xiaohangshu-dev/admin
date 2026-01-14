@@ -3,6 +3,7 @@ package roleperm
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -10,7 +11,7 @@ import (
 
 // DeleteCmd 删除用户命令,包含删除用户所需的信息
 type RoleDeleteCmd struct {
-	ID string `json:"id"`
+	ID uuid.UUID `json:"id"`
 }
 
 type RoleDeleteCmdHandler struct {
@@ -28,7 +29,6 @@ func NewRoleDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *RoleDeleteCmdHandl
 func (h *RoleDeleteCmdHandler) Handle(ctx context.Context, cmd RoleDeleteCmd) (bool, error) {
 
 	if tx := h.DB.Delete(&roleperm.Role{}, cmd.ID); tx.Error != nil {
-		h.Logger.Error("db delete user failed", zap.String("ID", cmd.ID), zap.Error(tx.Error))
 		return false, tx.Error
 	}
 

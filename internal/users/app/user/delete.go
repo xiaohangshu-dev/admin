@@ -3,6 +3,7 @@ package user
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -10,7 +11,7 @@ import (
 
 // DeleteCmd 删除用户命令,包含删除用户所需的信息
 type DeleteCmd struct {
-	ID string `json:"id"`
+	ID uuid.UUID `json:"id"`
 }
 
 type DeleteCmdHandler struct {
@@ -28,7 +29,6 @@ func NewDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *DeleteCmdHandler {
 func (h *DeleteCmdHandler) Handle(ctx context.Context, cmd DeleteCmd) (bool, error) {
 
 	if tx := h.DB.Delete(&user.Account{}, cmd.ID); tx.Error != nil {
-		h.Logger.Error("db delete user failed", zap.String("ID", cmd.ID), zap.Error(tx.Error))
 		return false, tx.Error
 	}
 
