@@ -18,28 +18,29 @@ const (
 )
 
 // Permission 功能
-type RolePermission struct {
+type Permission struct {
 	ddd.AggregateRoot[uuid.UUID]               // ID
-	Name                         string        // 名称
+	ParentID                     *uuid.UUID    // 父级ID
 	Type                         Type          // 功能类型
+	Title                        string        // 名称
+	Perm                         string        // 权限标识
 	Route                        string        // 路由
 	Icon                         string        // 图标
 	Desc                         string        // 描述
 	Weight                       int32         // 权重
-	ParentID                     *uuid.UUID    // 父级ID
 	Status                       status.Status // 状态
 }
 
 // newPermission 创建功能
-func newPermission(name, route, icon, desc string, weight int32, ptype Type) (*RolePermission, *Error) {
+func newPermission(name, route, icon, desc string, weight int32, ptype Type) (*Permission, *Error) {
 
-	fun := &RolePermission{
+	fun := &Permission{
 		AggregateRoot: ddd.NewAggregateRoot(uuid.New()),
 		Type:          ptype,
 		Weight:        weight,
 	}
 
-	if err := fun.SetName(name); err != nil {
+	if err := fun.SetTitle(name); err != nil {
 		return nil, err
 	}
 	if err := fun.SetRoute(route); err != nil {
@@ -56,17 +57,26 @@ func newPermission(name, route, icon, desc string, weight int32, ptype Type) (*R
 
 }
 
-// SetName 设置名称
-func (f *RolePermission) SetName(name string) *Error {
-	if name == "" {
+// SetTitle 设置标题
+func (f *Permission) SetTitle(title string) *Error {
+	if title == "" {
 		return ErrNameEmpty
 	}
-	f.Name = name
+	f.Title = title
+	return nil
+}
+
+// SetPerm 设置权限标识
+func (f *Permission) SetPerm(perm string) *Error {
+	if perm == "" {
+		return ErrPermEmpty
+	}
+	f.Perm = perm
 	return nil
 }
 
 // SetRoute 设置路由
-func (f *RolePermission) SetRoute(route string) *Error {
+func (f *Permission) SetRoute(route string) *Error {
 	if route == "" {
 		return ErrRouteEmpty
 	}
@@ -75,7 +85,7 @@ func (f *RolePermission) SetRoute(route string) *Error {
 }
 
 // SetIcon 设置图标
-func (f *RolePermission) SetIcon(icon string) *Error {
+func (f *Permission) SetIcon(icon string) *Error {
 	if icon == "" {
 		return ErrIconEmpty
 	}
@@ -84,7 +94,7 @@ func (f *RolePermission) SetIcon(icon string) *Error {
 }
 
 // SetDesc 设置描述
-func (f *RolePermission) SetDesc(desc string) *Error {
+func (f *Permission) SetDesc(desc string) *Error {
 	if desc == "" {
 		return ErrDescEmpty
 	}

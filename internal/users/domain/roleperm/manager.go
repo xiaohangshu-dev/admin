@@ -21,7 +21,7 @@ func NewManager(db *gorm.DB) *Manager {
 }
 
 // CreatePremission 创建权限
-func (m *Manager) CreatePremission(name, route, icon, desc, createBy string, weight int32, ptype Type, parentID *uuid.UUID) (*RolePermission, error) {
+func (m *Manager) CreatePremission(name, route, icon, desc, createBy string, weight int32, ptype Type, parentID *uuid.UUID) (*Permission, error) {
 
 	// 内部业务规则校验
 	fun, err := newPermission(name, route, icon, desc, weight, ptype)
@@ -34,7 +34,7 @@ func (m *Manager) CreatePremission(name, route, icon, desc, createBy string, wei
 	fun.ParentID = parentID
 
 	// 外部业务规则校验
-	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&RolePermission{}).Error; err == nil {
+	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&Permission{}).Error; err == nil {
 		return nil, ErrFunctionAlreadyExists
 	}
 
@@ -42,9 +42,9 @@ func (m *Manager) CreatePremission(name, route, icon, desc, createBy string, wei
 }
 
 // updatePermission 更新权限
-func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc, updateBy string, weight int32, ptype Type, parentID *uuid.UUID) (*RolePermission, error) {
+func (m *Manager) UpdatePermission(id uuid.UUID, title, route, icon, desc, updateBy string, weight int32, ptype Type, parentID *uuid.UUID) (*Permission, error) {
 
-	perm := &RolePermission{}
+	perm := &Permission{}
 
 	if err := m.Where("id = ?", id).First(perm).Error; err != nil {
 		if errors.Is(err, gorm.ErrRecordNotFound) {
@@ -54,7 +54,7 @@ func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc, update
 	}
 
 	// 内部业务规则校验
-	if err := perm.SetName(name); err != nil {
+	if err := perm.SetTitle(title); err != nil {
 		return nil, err
 	}
 
@@ -75,7 +75,7 @@ func (m *Manager) UpdatePermission(id uuid.UUID, name, route, icon, desc, update
 	perm.UpdatedAt = &now
 	perm.Type = ptype
 	// 外部业务规则校验
-	if err := m.Where("name = ? And parent_id= ?", name, parentID).First(&RolePermission{}).Error; err == nil {
+	if err := m.Where("title = ? And parent_id= ?", title, parentID).First(&Permission{}).Error; err == nil {
 		return nil, ErrFunctionAlreadyExists
 	}
 

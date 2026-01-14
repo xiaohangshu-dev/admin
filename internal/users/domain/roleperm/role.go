@@ -10,10 +10,10 @@ type Role struct {
 	ddd.AggregateRoot[uuid.UUID]               // ID
 	Role                         string        // 角色
 	Name                         string        // 名称
-	ParentID                     uuid.UUID     // 父级ID
+	ParentID                     *uuid.UUID    // 父级ID
+	Status                       status.Status // 状态
 	CreateBy                     string        // 创建人
 	UpdateBy                     *string       // 更新人
-	Status                       status.Status // 状态
 }
 
 // newRole 创建角色
@@ -61,6 +61,6 @@ func (r *Role) SetParentID(parentID uuid.UUID) *Error {
 	if parentID == uuid.Nil {
 		return ErrNameEmpty
 	}
-	r.ParentID = parentID
+	r.ParentID = &parentID
 	return nil
 }

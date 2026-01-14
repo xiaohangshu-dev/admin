@@ -24,6 +24,7 @@ type Account struct {
 	Phone                        *string       // 手机号
 	Pwd                          string        // 密码
 	Salt                         string        // 密码盐值
+	Slogan                       *string       // 个性签名
 	Gender                       Gender        // 性别
 	Status                       status.Status // 状态
 	CreateBy                     uuid.UUID     // 创建人
