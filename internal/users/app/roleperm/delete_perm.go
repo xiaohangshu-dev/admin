@@ -3,6 +3,7 @@ package roleperm
 import (
 	"context"
 
+	"github.com/google/uuid"
 	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -10,7 +11,7 @@ import (
 
 // DeleteCmd 删除用户命令,包含删除用户所需的信息
 type PermDeleteCmd struct {
-	ID string `json:"id"`
+	ID uuid.UUID `json:"id"`
 }
 
 type PermDeleteCmdHandler struct {

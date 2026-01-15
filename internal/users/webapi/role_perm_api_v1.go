@@ -9,13 +9,21 @@ import (
 	"go.uber.org/zap"
 )
 
-func RolePermApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *roleperm.App) {
+func RolePermApiV1EndPoint(router *gin.Engine, log *zap.Logger, app *roleperm.App) {
 
-	group := router.Group("/roleperm")
+	group := router.Group("/role")
 	{
-		group.POST("", nil)
-	}
+		group.POST("", RoleCreate(app, log))
+		group.PUT("", RoleUpdate(app, log))
+		group.DELETE("", RoleDelete(app, log))
 
+	}
+	group = router.Group("/perm")
+	{
+		group.POST("", PermCreate(app, log))
+		group.PUT("", PermUpdate(app, log))
+		group.DELETE("", PermDelete(app, log))
+	}
 }
 
 // RoleCreate
@@ -204,6 +212,45 @@ func PermUpdate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 
 		if userErr, ok := err.(*rpd.Error); ok {
 			log.Error("更新权限失败", zap.String("ID", cmd.ID.String()), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, InternalServerError())
+	}
+}
+
+// PermDelete
+// @Summary 删除权限
+// @Description 删除权限
+// @Tags RolePerm
+// @Accept json
+// @Produce json
+// @Param request body roleperm.PermDeleteCmd true "删除权限参数"
+// @Success 200 {object} Response[bool] "删除成功"
+// @Failure 400 {object} Response[bool] "请求参数错误"
+// @Failure 500 {object} Response[bool] "服务器内部错误"
+// @Router /roleperm [delete]
+func PermDelete(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		var cmd roleperm.PermDeleteCmd
+
+		if err := c.ShouldBindJSON(&cmd); err != nil {
+			log.Warn("参数绑定失败", zap.Error(err))
+			c.JSON(http.StatusBadRequest, BadRequest())
+			return
+		}
+
+		result, err := app.PermDeleteCmdHandler.Handle(c, cmd)
+
+		if err == nil {
+			c.JSON(http.StatusOK, Success(result))
+			return
+		}
+
+		if userErr, ok := err.(*rpd.Error); ok {
+			log.Error("删除权限失败", zap.String("ID", cmd.ID.String()), zap.Error(err))
 			c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
 			return
 		}
