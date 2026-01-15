@@ -6,7 +6,7 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/spf13/viper v1.21.0 // indirect
 	github.com/swaggo/swag v1.16.6
-	github.com/xiaohangshuhub/go-workit v0.0.0-20260113021754-78fd6ad6ac0a
+	github.com/xiaohangshuhub/go-workit v0.0.0-20260115013328-250ef77adf6f
 	go.uber.org/fx v1.24.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.73.0
