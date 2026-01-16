@@ -23,4 +23,6 @@ var (
 	ErrFunctionNotFound      = &Error{Code: 20007, Err: errors.New("permission not found")}      // 权限不存在
 	ErrRoleAlreadyExists     = &Error{Code: 20008, Err: errors.New("role already exists")}       // 角色已存在
 	ErrRoleNotFound          = &Error{Code: 20009, Err: errors.New("role not found")}            // 角色不存在
+	ErrUserIDEmpty           = &Error{Code: 20010, Err: errors.New("user id is empty")}          // 用户ID为空
+	ErrRoleIDEmpty           = &Error{Code: 20011, Err: errors.New("role id is empty")}          // 角色ID为空
 )

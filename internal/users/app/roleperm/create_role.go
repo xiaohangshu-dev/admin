@@ -49,13 +49,23 @@ func (c *RoleCreateCmdHandler) Handle(ctx context.Context, cmd RoleCreateCmd) (b
 		return false, err
 	}
 
-	if err := c.DB.Create(r).Error; err != nil {
+	rp, err := c.Manager.ConfigureRolePerms(r.ID, cmd.PermIds)
+
+	if err != nil {
 		return false, err
 	}
 
-	if err := c.Manager.ConfigureRolePerms(r.ID, cmd.PermIds); err != nil {
+	// 开启事务
+	if err := c.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(r).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(rp).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
 		return false, err
 	}
-
 	return true, nil
 }

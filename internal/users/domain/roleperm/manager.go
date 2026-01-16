@@ -136,40 +136,39 @@ func (m *Manager) UpdateRole(id uuid.UUID, role, name, updateBy string, parentID
 }
 
 // ConfigureUserRoles 配置用户角色
-func (m *Manager) ConfigureUserRoles(userId uuid.UUID, roleIdList []uuid.UUID) error {
+func (m *Manager) ConfigureUserRoles(userId uuid.UUID, roleIdList []uuid.UUID) ([]UserRole, error) {
+
+	if userId == uuid.Nil {
+		return nil, ErrUserIDEmpty
+	}
 
 	var user_role []UserRole
 
 	for _, roleId := range roleIdList {
+		if roleId == uuid.Nil {
+			continue
+		}
 		user_role = append(user_role, newUserRole(userId, roleId))
 	}
 
-	if result := m.Delete(&UserRole{}, "user_id =?", userId); result.Error != nil {
-		return result.Error
-	}
-
-	if result := m.DB.Create(&user_role); result.Error != nil {
-		return result.Error
-	}
-
-	return nil
+	return user_role, nil
 }
 
 // ConfigureRolePerms 配置角色权限
-func (m *Manager) ConfigureRolePerms(roleId uuid.UUID, funcIdList []uuid.UUID) error {
+func (m *Manager) ConfigureRolePerms(roleId uuid.UUID, funcIdList []uuid.UUID) ([]RolePerm, error) {
+
+	if roleId == uuid.Nil {
+		return nil, ErrRoleIDEmpty
+	}
+
 	var role_func []RolePerm
 
 	for _, permId := range funcIdList {
+		if permId == uuid.Nil {
+			continue
+		}
 		role_func = append(role_func, newRolePerm(roleId, permId))
 	}
 
-	if result := m.Delete(&RolePerm{}, "role_id =?", roleId); result.Error != nil {
-		return result.Error
-	}
-
-	if result := m.DB.Create(&role_func); result.Error != nil {
-		return result.Error
-	}
-
-	return nil
+	return role_func, nil
 }

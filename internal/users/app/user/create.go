@@ -57,11 +57,22 @@ func (c *CreateCmdHandler) Handle(ctx context.Context, cmd CreateCmd) (bool, err
 		return false, err
 	}
 
-	if result := c.DB.Create(u); result.Error == nil {
+	ur, err := c.pm.ConfigureUserRoles(u.ID, cmd.Roles)
+
+	if err != nil {
 		return false, err
 	}
 
-	if err := c.pm.ConfigureUserRoles(u.ID, cmd.Roles); err != nil {
+	// 开启事务
+	if err := c.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Create(u).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(ur).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
 		return false, err
 	}
 

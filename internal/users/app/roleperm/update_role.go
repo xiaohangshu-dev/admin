@@ -50,8 +50,26 @@ func (h *RoleUpdateCmdHandler) Handle(ctx context.Context, cmd RoleUpdateCmd) (b
 		return false, err
 	}
 
-	if tx := h.DB.Save(role); tx.Error != nil {
-		return false, tx.Error
+	rp, err := h.Manager.ConfigureRolePerms(role.ID, cmd.PermIds)
+
+	if err != nil {
+		return false, err
+	}
+
+	// 开启事务
+	if err := h.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(&roleperm.RolePerm{}, "role_id = ?", role.ID).Error; err != nil {
+			return err
+		}
+		if err := tx.Save(role).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(rp).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
+		return false, err
 	}
 
 	return true, nil

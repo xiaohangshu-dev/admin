@@ -54,11 +54,25 @@ func (h *UpdateCmdHandler) Handle(ctx context.Context, cmd UpdateCmd) (bool, err
 		return false, err
 	}
 
-	if tx := h.DB.Save(account); tx.Error != nil {
-		return false, tx.Error
+	ur, err := h.pm.ConfigureUserRoles(account.ID, cmd.Roles)
+
+	if err != nil {
+		return false, err
 	}
 
-	if err := h.pm.ConfigureUserRoles(account.ID, cmd.Roles); err != nil {
+	// 开启事务
+	if err := h.Transaction(func(tx *gorm.DB) error {
+		if err := tx.Delete(&roleperm.UserRole{}, "user_id = ?", account.ID).Error; err != nil {
+			return err
+		}
+		if err := tx.Save(account).Error; err != nil {
+			return err
+		}
+		if err := tx.Create(ur).Error; err != nil {
+			return err
+		}
+		return nil
+	}); err != nil {
 		return false, err
 	}
 
