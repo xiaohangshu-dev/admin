@@ -31,7 +31,7 @@ func (h *RoleListQueryHandler) Handle(ctx context.Context, query RoleListQuery) 
 
 	var roles []roleperm.Role
 
-	if tx := h.DB.Find(&roles); tx.Error != nil {
+	if tx := h.Find(&roles); tx.Error != nil {
 		return nil, tx.Error
 	}
 

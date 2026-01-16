@@ -53,7 +53,7 @@ func (h *PermUpdateCmdHandler) Handle(ctx context.Context, cmd PermUpdateCmd) (b
 		return false, err
 	}
 
-	if tx := h.DB.Save(perm); tx.Error != nil {
+	if tx := h.Save(perm); tx.Error != nil {
 		return false, tx.Error
 	}
 

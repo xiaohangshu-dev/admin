@@ -33,13 +33,13 @@ func (h *RoleQueryHandler) Handle(ctx context.Context, query RoleQuery) (RoleInf
 
 	var role roleperm.Role
 
-	if tx := h.DB.First(&role, query.ID); tx.Error != nil {
+	if tx := h.First(&role, query.ID); tx.Error != nil {
 		return RoleInfoDto{}, tx.Error
 	}
 
 	var role_perms []roleperm.RolePerm
 
-	if tx := h.DB.Where("role_id = ?", role.ID).Find(&role_perms); tx.Error != nil {
+	if tx := h.Where("role_id = ?", role.ID).Find(&role_perms); tx.Error != nil {
 		return RoleInfoDto{}, tx.Error
 	}
 

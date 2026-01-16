@@ -28,7 +28,7 @@ func NewRoleDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *RoleDeleteCmdHandl
 
 func (h *RoleDeleteCmdHandler) Handle(ctx context.Context, cmd RoleDeleteCmd) (bool, error) {
 
-	if tx := h.DB.Delete(&roleperm.Role{}, cmd.ID); tx.Error != nil {
+	if tx := h.Delete(&roleperm.Role{}, cmd.ID); tx.Error != nil {
 		return false, tx.Error
 	}
 

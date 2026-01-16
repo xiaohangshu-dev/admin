@@ -6,12 +6,13 @@ type App struct {
 	*DeleteCmdHandler
 	*UpdateCmdHandler
 	*UpdatePwdCmdHandler
+	*UserQueryHandler
 }
 
 func NewApp(
 	createHandler *CreateCmdHandler, loginHandler *LoginHandler,
 	deleteHandler *DeleteCmdHandler, updateHandler *UpdateCmdHandler,
-	updatePwdHandler *UpdatePwdCmdHandler) *App {
+	updatePwdHandler *UpdatePwdCmdHandler, queryHandler *UserQueryHandler) *App {
 
 	return &App{
 		CreateCmdHandler:    createHandler,
@@ -19,5 +20,6 @@ func NewApp(
 		DeleteCmdHandler:    deleteHandler,
 		UpdateCmdHandler:    updateHandler,
 		UpdatePwdCmdHandler: updatePwdHandler,
+		UserQueryHandler:    queryHandler,
 	}
 }

@@ -23,7 +23,7 @@ type PermListQuery struct {
 }
 
 type PermListQueryHandler struct {
-	DB *gorm.DB
+	*gorm.DB
 }
 
 func NewPermListQueryHandler(repo *gorm.DB) *PermListQueryHandler {
@@ -36,7 +36,7 @@ func (h *PermListQueryHandler) Handle(ctx context.Context, query PermListQuery) 
 
 	var perms []roleperm.Permission
 
-	if tx := h.DB.Find(&perms); tx.Error != nil {
+	if tx := h.Find(&perms); tx.Error != nil {
 		return nil, tx.Error
 	}
 

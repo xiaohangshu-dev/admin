@@ -28,7 +28,7 @@ func NewPermDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *PermDeleteCmdHandl
 
 func (h *PermDeleteCmdHandler) Handle(ctx context.Context, cmd PermDeleteCmd) (bool, error) {
 
-	if tx := h.DB.Delete(&roleperm.Permission{}, cmd.ID); tx.Error != nil {
+	if tx := h.Delete(&roleperm.Permission{}, cmd.ID); tx.Error != nil {
 		return false, tx.Error
 	}
 

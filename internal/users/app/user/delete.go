@@ -28,7 +28,7 @@ func NewDeleteCmdHandler(repo *gorm.DB, zap *zap.Logger) *DeleteCmdHandler {
 
 func (h *DeleteCmdHandler) Handle(ctx context.Context, cmd DeleteCmd) (bool, error) {
 
-	if tx := h.DB.Delete(&user.Account{}, cmd.ID); tx.Error != nil {
+	if tx := h.Delete(&user.Account{}, cmd.ID); tx.Error != nil {
 		return false, tx.Error
 	}
 

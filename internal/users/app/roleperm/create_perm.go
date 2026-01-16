@@ -51,7 +51,7 @@ func (c *PermCreateCmdHandler) Handle(ctx context.Context, cmd PermCreateCmd) (b
 		return false, err
 	}
 
-	if err := c.DB.Create(u).Error; err != nil {
+	if err := c.Create(u).Error; err != nil {
 		return false, err
 	}
 

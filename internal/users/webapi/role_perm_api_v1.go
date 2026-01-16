@@ -36,7 +36,7 @@ func RolePermApiV1EndPoint(router *gin.Engine, log *zap.Logger, app *roleperm.Ap
 // @Success 200 {object} Response[bool] "创建成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [post]
+// @Router /role [post]
 func RoleCreate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var cmd roleperm.RoleCreateCmd
@@ -74,7 +74,7 @@ func RoleCreate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 // @Success 200 {object} Response[bool] "更新成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [put]
+// @Router /role [put]
 func RoleUpdate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -113,7 +113,7 @@ func RoleUpdate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 // @Success 200 {object} Response[bool] "删除成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [delete]
+// @Router /role [delete]
 func RoleDelete(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -152,7 +152,7 @@ func RoleDelete(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 // @Success 200 {object} Response[bool] "创建成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [post]
+// @Router /perm [post]
 func PermCreate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -191,7 +191,7 @@ func PermCreate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 // @Success 200 {object} Response[bool] "更新成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [put]
+// @Router /perm [put]
 func PermUpdate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
@@ -230,7 +230,7 @@ func PermUpdate(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 // @Success 200 {object} Response[bool] "删除成功"
 // @Failure 400 {object} Response[bool] "请求参数错误"
 // @Failure 500 {object} Response[bool] "服务器内部错误"
-// @Router /roleperm [delete]
+// @Router /perm [delete]
 func PermDelete(app *roleperm.App, log *zap.Logger) gin.HandlerFunc {
 	return func(c *gin.Context) {
 

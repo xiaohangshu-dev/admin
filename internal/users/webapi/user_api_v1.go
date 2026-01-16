@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
 	"github.com/xiaohangshuhub/admin/internal/users/app/user"
 	userDomin "github.com/xiaohangshuhub/admin/internal/users/domain/user"
 	"go.uber.org/zap"
@@ -16,6 +17,7 @@ func UserApiV1EndPoint(router *gin.Engine, log *zap.Logger, userapp *user.App) {
 		group.POST("", Create(userapp, log))
 		group.PUT("", Update(userapp, log))
 		group.DELETE("", Delete(userapp, log))
+		group.GET("/:id", Get(userapp, log))
 	}
 
 	group.POST("/login", Login(userapp, log)).WithAllowAnonymous()
@@ -170,5 +172,43 @@ func Login(app *user.App, log *zap.Logger) gin.HandlerFunc {
 
 		c.JSON(http.StatusInternalServerError, InternalServerError())
 
+	}
+}
+
+// Get godoc
+// @Summary 获取用户
+// @Description 获取用户
+// @Tags User
+// @Accept json
+// @Produce json
+// @Param id query string true "用户ID"
+// @Success 200 {object} Response[user.UserDto] "获取成功"
+// @Failure 400 {object} Response[user.UserDto] "请求参数错误"
+// @Failure 500 {object} Response[user.UserDto] "服务器内部错误"
+// @Router /user:id [get]
+func Get(app *user.App, log *zap.Logger) gin.HandlerFunc {
+	return func(c *gin.Context) {
+
+		id, err := uuid.Parse(c.Query("id"))
+		if err != nil {
+			log.Warn("参数绑定失败", zap.Error(err))
+			c.JSON(http.StatusBadRequest, BadRequest())
+			return
+		}
+
+		result, err := app.UserQueryHandler.Handle(c, user.UserQuery{ID: id})
+
+		if err == nil {
+			c.JSON(http.StatusOK, Success(result))
+			return
+		}
+
+		if userErr, ok := err.(*userDomin.Error); ok {
+			log.Error("获取用户失败", zap.String("ID", id.String()), zap.Error(err))
+			c.JSON(http.StatusInternalServerError, Fail(userErr.Code, userErr.Error()))
+			return
+		}
+
+		c.JSON(http.StatusInternalServerError, InternalServerError())
 	}
 }

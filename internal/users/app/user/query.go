@@ -21,10 +21,11 @@ type UserInfoDto struct {
 }
 
 type UserQuery struct {
+	ID uuid.UUID
 }
 
 type UserQueryHandler struct {
-	DB *gorm.DB
+	*gorm.DB
 }
 
 func NewUserQueryHandler(repo *gorm.DB) *UserQueryHandler {
@@ -34,21 +35,18 @@ func NewUserQueryHandler(repo *gorm.DB) *UserQueryHandler {
 }
 
 func (h *UserQueryHandler) Handle(ctx context.Context, query UserQuery) (UserInfoDto, error) {
-	uid, ok := ctx.Value("UserID").(uuid.UUID)
 
-	if !ok {
-		return UserInfoDto{}, errors.New("invalid user id in context")
+	if query.ID == uuid.Nil {
+		return UserInfoDto{}, errors.New("invalid user id")
 	}
-
 	var user user.Account
 
-	if tx := h.DB.First(&user, uid); tx.Error != nil {
+	if tx := h.First(&user, query.ID); tx.Error != nil {
 		return UserInfoDto{}, tx.Error
 	}
-
 	var roles []roleperm.UserRole
 
-	if tx := h.DB.Where("user_id = ?", user.ID).Find(&roles); tx.Error != nil {
+	if tx := h.Where("user_id = ?", user.ID).Find(&roles); tx.Error != nil {
 		return UserInfoDto{}, tx.Error
 	}
 
