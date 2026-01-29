@@ -1,5 +1,5 @@
 definitions:
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermCreateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermCreateCmd:
     properties:
       desc:
         description: 头像
@@ -21,19 +21,19 @@ definitions:
         type: string
       type:
         allOf:
-        - $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type'
+        - $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type'
         description: 功能类型
       weight:
         description: 权重
         format: int32
         type: integer
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermDeleteCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermDeleteCmd:
     properties:
       id:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermUpdateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermUpdateCmd:
     properties:
       desc:
         description: 头像
@@ -54,14 +54,14 @@ definitions:
         type: string
       type:
         allOf:
-        - $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type'
+        - $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type'
         description: 功能类型
       weight:
         description: 权重
         format: int32
         type: integer
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleCreateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleCreateCmd:
     properties:
       desc:
         description: 头像
@@ -81,12 +81,12 @@ definitions:
         description: 角色
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleDeleteCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleDeleteCmd:
     properties:
       id:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleUpdateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleUpdateCmd:
     properties:
       desc:
         description: 头像
@@ -109,7 +109,7 @@ definitions:
         description: 角色
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_user.CreateCmd:
     properties:
       avatar:
         description: 头像
@@ -119,7 +119,7 @@ definitions:
         type: string
       gender:
         allOf:
-        - $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender'
+        - $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender'
         description: 性别
       nickname:
         description: 昵称
@@ -142,26 +142,26 @@ definitions:
         description: 用户名
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_user.DeleteCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_user.DeleteCmd:
     properties:
       id:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_user.Login:
+  github_com_xiaohangshu-dev_admin_internal_users_app_user.Login:
     properties:
       password:
         type: string
       username:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_user.UpdateCmd:
+  github_com_xiaohangshu-dev_admin_internal_users_app_user.UpdateCmd:
     properties:
       avatar:
         type: string
       email:
         type: string
       gender:
-        $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender'
+        $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender'
       id:
         type: string
       nikename:
@@ -177,7 +177,7 @@ definitions:
       salt:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto:
+  github_com_xiaohangshu-dev_admin_internal_users_app_user.UserDto:
     properties:
       access_token:
         type: string
@@ -190,7 +190,7 @@ definitions:
       username:
         type: string
     type: object
-  github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type:
+  github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type:
     enum:
     - 1
     - 2
@@ -217,7 +217,7 @@ definitions:
     - Menu
     - MenuItem
     - Action
-  github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender:
+  github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender:
     enum:
     - 1
     - 2
@@ -245,12 +245,12 @@ definitions:
       message:
         type: string
     type: object
-  internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto:
+  internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto:
     properties:
       code:
         type: integer
       data:
-        $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto'
+        $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.UserDto'
       message:
         type: string
     type: object
@@ -268,7 +268,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermDeleteCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermDeleteCmd'
       produces:
       - application/json
       responses:
@@ -297,7 +297,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermCreateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermCreateCmd'
       produces:
       - application/json
       responses:
@@ -326,7 +326,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermUpdateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermUpdateCmd'
       produces:
       - application/json
       responses:
@@ -356,7 +356,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleDeleteCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleDeleteCmd'
       produces:
       - application/json
       responses:
@@ -385,7 +385,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleCreateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleCreateCmd'
       produces:
       - application/json
       responses:
@@ -414,7 +414,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleUpdateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleUpdateCmd'
       produces:
       - application/json
       responses:
@@ -444,7 +444,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.DeleteCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.DeleteCmd'
       produces:
       - application/json
       responses:
@@ -473,7 +473,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.CreateCmd'
       produces:
       - application/json
       responses:
@@ -502,7 +502,7 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.UpdateCmd'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.UpdateCmd'
       produces:
       - application/json
       responses:
@@ -532,22 +532,22 @@ paths:
         name: request
         required: true
         schema:
-          $ref: '#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.Login'
+          $ref: '#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.Login'
       produces:
       - application/json
       responses:
         "200":
           description: 登录成功
           schema:
-            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto'
+            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto'
         "400":
           description: 请求参数错误
           schema:
-            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto'
+            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto'
         "500":
           description: 服务器内部错误
           schema:
-            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto'
+            $ref: '#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto'
       summary: 用户登录
       tags:
       - User

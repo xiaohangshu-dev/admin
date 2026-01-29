@@ -4,8 +4,8 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
-	"github.com/xiaohangshuhub/admin/internal/users/app/roleperm"
-	rpd "github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
+	"github.com/xiaohangshu-dev/admin/internal/users/app/roleperm"
+	rpd "github.com/xiaohangshu-dev/admin/internal/users/domain/roleperm"
 	"go.uber.org/zap"
 )
 

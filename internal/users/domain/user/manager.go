@@ -48,7 +48,6 @@ func (m *Manager) Create(username, nickname, avatar, pwd string, phone, email *s
 			return nil, err
 		}
 	}
-
 	return account, nil
 }
 

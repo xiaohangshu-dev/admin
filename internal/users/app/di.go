@@ -1,10 +1,10 @@
 package app
 
 import (
-	"github.com/xiaohangshuhub/admin/internal/users/app/roleperm"
-	"github.com/xiaohangshuhub/admin/internal/users/app/user"
-	rpd "github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
-	ud "github.com/xiaohangshuhub/admin/internal/users/domain/user"
+	"github.com/xiaohangshu-dev/admin/internal/users/app/roleperm"
+	"github.com/xiaohangshu-dev/admin/internal/users/app/user"
+	rpd "github.com/xiaohangshu-dev/admin/internal/users/domain/roleperm"
+	ud "github.com/xiaohangshu-dev/admin/internal/users/domain/user"
 	"go.uber.org/fx"
 )
 

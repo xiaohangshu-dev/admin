@@ -5,7 +5,7 @@ import (
 	"errors"
 
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/roleperm"
+	"github.com/xiaohangshu-dev/admin/internal/users/domain/roleperm"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"

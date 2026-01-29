@@ -4,7 +4,7 @@ import (
 	"context"
 
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
+	"github.com/xiaohangshu-dev/admin/internal/users/domain/user"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )

@@ -2,8 +2,8 @@ package roleperm
 
 import (
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/dic/status"
-	"github.com/xiaohangshuhub/go-workit/pkg/ddd"
+	"github.com/xiaohangshu-dev/admin/internal/users/domain/dic/status"
+	"github.com/xiaohangshu-dev/go-workit/pkg/ddd"
 )
 
 // FuncType 功能类型

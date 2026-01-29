@@ -1,7 +1,7 @@
 package webapi
 
 import (
-	"github.com/xiaohangshuhub/admin/internal/users/app"
+	"github.com/xiaohangshu-dev/admin/internal/users/app"
 	"go.uber.org/fx"
 )
 

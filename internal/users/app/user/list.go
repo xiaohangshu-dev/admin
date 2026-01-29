@@ -3,7 +3,7 @@ package user
 import (
 	"context"
 
-	"github.com/xiaohangshuhub/admin/internal/users/domain/user"
+	"github.com/xiaohangshu-dev/admin/internal/users/domain/user"
 	"gorm.io/gorm"
 )
 

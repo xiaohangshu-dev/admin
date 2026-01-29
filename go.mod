@@ -1,4 +1,4 @@
-module github.com/xiaohangshuhub/admin
+module github.com/xiaohangshu-dev/admin
 
 go 1.25
 
@@ -6,14 +6,16 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/spf13/viper v1.21.0 // indirect
 	github.com/swaggo/swag v1.16.6
-	github.com/xiaohangshuhub/go-workit v0.0.0-20260115013328-250ef77adf6f
 	go.uber.org/fx v1.24.0
 	go.uber.org/zap v1.27.0
 	google.golang.org/grpc v1.73.0
 	google.golang.org/protobuf v1.36.10
 )
 
-require github.com/gin-gonic/gin v1.10.0
+require (
+	github.com/gin-gonic/gin v1.10.0
+	github.com/xiaohangshu-dev/go-workit v0.0.0-20260129063750-e30333310b0f
+)
 
 require (
 	github.com/BurntSushi/toml v1.5.0 // indirect
@@ -104,4 +106,4 @@ require (
 	gorm.io/gorm v1.30.0
 )
 
-replace github.com/gin-gonic/gin => github.com/xiaohangshuhub/gin v0.0.0-20251127022746-130901f68014
+replace github.com/gin-gonic/gin => github.com/xiaohangshu-dev/gin v0.0.0-20251127022746-130901f68014

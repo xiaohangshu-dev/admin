@@ -35,7 +35,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermUpdateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermUpdateCmd"
                         }
                     }
                 ],
@@ -79,7 +79,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermCreateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermCreateCmd"
                         }
                     }
                 ],
@@ -123,7 +123,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermDeleteCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermDeleteCmd"
                         }
                     }
                 ],
@@ -169,7 +169,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleUpdateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleUpdateCmd"
                         }
                     }
                 ],
@@ -213,7 +213,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleCreateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleCreateCmd"
                         }
                     }
                 ],
@@ -257,7 +257,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleDeleteCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleDeleteCmd"
                         }
                     }
                 ],
@@ -303,7 +303,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.UpdateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.UpdateCmd"
                         }
                     }
                 ],
@@ -347,7 +347,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.CreateCmd"
                         }
                     }
                 ],
@@ -391,7 +391,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.DeleteCmd"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.DeleteCmd"
                         }
                     }
                 ],
@@ -437,7 +437,7 @@ const docTemplate = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.Login"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.Login"
                         }
                     }
                 ],
@@ -445,19 +445,19 @@ const docTemplate = `{
                     "200": {
                         "description": "登录成功",
                         "schema": {
-                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto"
                         }
                     },
                     "400": {
                         "description": "请求参数错误",
                         "schema": {
-                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto"
                         }
                     },
                     "500": {
                         "description": "服务器内部错误",
                         "schema": {
-                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto"
+                            "$ref": "#/definitions/internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto"
                         }
                     }
                 }
@@ -465,7 +465,7 @@ const docTemplate = `{
         }
     },
     "definitions": {
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermCreateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermCreateCmd": {
             "type": "object",
             "properties": {
                 "desc": {
@@ -496,7 +496,7 @@ const docTemplate = `{
                     "description": "功能类型",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type"
                         }
                     ]
                 },
@@ -507,7 +507,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermDeleteCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermDeleteCmd": {
             "type": "object",
             "properties": {
                 "id": {
@@ -515,7 +515,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.PermUpdateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.PermUpdateCmd": {
             "type": "object",
             "properties": {
                 "desc": {
@@ -545,7 +545,7 @@ const docTemplate = `{
                     "description": "功能类型",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type"
                         }
                     ]
                 },
@@ -556,7 +556,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleCreateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleCreateCmd": {
             "type": "object",
             "properties": {
                 "desc": {
@@ -584,7 +584,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleDeleteCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleDeleteCmd": {
             "type": "object",
             "properties": {
                 "id": {
@@ -592,7 +592,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_roleperm.RoleUpdateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_roleperm.RoleUpdateCmd": {
             "type": "object",
             "properties": {
                 "desc": {
@@ -624,7 +624,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_user.CreateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_user.CreateCmd": {
             "type": "object",
             "properties": {
                 "avatar": {
@@ -639,7 +639,7 @@ const docTemplate = `{
                     "description": "性别",
                     "allOf": [
                         {
-                            "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender"
+                            "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender"
                         }
                     ]
                 },
@@ -672,7 +672,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_user.DeleteCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_user.DeleteCmd": {
             "type": "object",
             "properties": {
                 "id": {
@@ -680,7 +680,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_user.Login": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_user.Login": {
             "type": "object",
             "properties": {
                 "password": {
@@ -691,7 +691,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_user.UpdateCmd": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_user.UpdateCmd": {
             "type": "object",
             "properties": {
                 "avatar": {
@@ -701,7 +701,7 @@ const docTemplate = `{
                     "type": "string"
                 },
                 "gender": {
-                    "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender"
+                    "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender"
                 },
                 "id": {
                     "type": "string"
@@ -726,7 +726,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto": {
+        "github_com_xiaohangshu-dev_admin_internal_users_app_user.UserDto": {
             "type": "object",
             "properties": {
                 "access_token": {
@@ -746,7 +746,7 @@ const docTemplate = `{
                 }
             }
         },
-        "github_com_xiaohangshuhub_admin_internal_users_domain_roleperm.Type": {
+        "github_com_xiaohangshu-dev_admin_internal_users_domain_roleperm.Type": {
             "type": "integer",
             "format": "int32",
             "enum": [
@@ -778,7 +778,7 @@ const docTemplate = `{
                 "Action"
             ]
         },
-        "github_com_xiaohangshuhub_admin_internal_users_domain_user.Gender": {
+        "github_com_xiaohangshu-dev_admin_internal_users_domain_user.Gender": {
             "type": "integer",
             "format": "int32",
             "enum": [
@@ -816,14 +816,14 @@ const docTemplate = `{
                 }
             }
         },
-        "internal_users_webapi.Response-github_com_xiaohangshuhub_admin_internal_users_app_user_UserDto": {
+        "internal_users_webapi.Response-github_com_xiaohangshu-dev_admin_internal_users_app_user_UserDto": {
             "type": "object",
             "properties": {
                 "code": {
                     "type": "integer"
                 },
                 "data": {
-                    "$ref": "#/definitions/github_com_xiaohangshuhub_admin_internal_users_app_user.UserDto"
+                    "$ref": "#/definitions/github_com_xiaohangshu-dev_admin_internal_users_app_user.UserDto"
                 },
                 "message": {
                     "type": "string"

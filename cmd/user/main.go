@@ -1,15 +1,15 @@
 package main
 
 import (
-	_ "github.com/xiaohangshuhub/admin/api/users/docs" // swagger 一定要有这行,指向你的文档地址
-	"github.com/xiaohangshuhub/admin/internal/users/webapi"
+	_ "github.com/xiaohangshu-dev/admin/api/users/docs" // swagger 一定要有这行,指向你的文档地址
+	"github.com/xiaohangshu-dev/admin/internal/users/webapi"
 
-	"github.com/xiaohangshuhub/go-workit/pkg/db"
-	"github.com/xiaohangshuhub/go-workit/pkg/webapp"
-	"github.com/xiaohangshuhub/go-workit/pkg/webapp/auth"
-	"github.com/xiaohangshuhub/go-workit/pkg/webapp/auth/scheme/jwt"
-	"github.com/xiaohangshuhub/go-workit/pkg/webapp/authz"
-	"github.com/xiaohangshuhub/go-workit/pkg/webapp/dbctx"
+	"github.com/xiaohangshu-dev/go-workit/pkg/db"
+	"github.com/xiaohangshu-dev/go-workit/pkg/webapp"
+	"github.com/xiaohangshu-dev/go-workit/pkg/webapp/auth"
+	"github.com/xiaohangshu-dev/go-workit/pkg/webapp/auth/scheme/jwt"
+	"github.com/xiaohangshu-dev/go-workit/pkg/webapp/authz"
+	"github.com/xiaohangshu-dev/go-workit/pkg/webapp/dbctx"
 )
 
 func main() {

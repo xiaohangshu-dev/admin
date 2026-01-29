@@ -2,8 +2,8 @@ package user
 
 import (
 	"github.com/google/uuid"
-	"github.com/xiaohangshuhub/admin/internal/users/domain/dic/status"
-	"github.com/xiaohangshuhub/go-workit/pkg/ddd"
+	"github.com/xiaohangshu-dev/admin/internal/users/domain/dic/status"
+	"github.com/xiaohangshu-dev/go-workit/pkg/ddd"
 )
 
 type Gender int8
@@ -68,10 +68,11 @@ func (a *Account) SetNickname(nickname string) *Error {
 	}
 
 	a.Nickname = nickname
+
 	return nil
 }
 
-// SetNickname 设置昵称
+// SetAvatar 设置头像
 func (a *Account) SetAvatar(avatar string) *Error {
 	if avatar == "" {
 		return ErrAvatarEmpty
