@@ -6,7 +6,8 @@ import { PieChartOutlined} from "@ant-design/icons";
 import {MenuProps} from "antd";
 import {useTranslation} from "react-i18next";
 import Portal from "../layout/Portal";
-import welcome from "./modules/welcome";
+import dashboard from "./modules/dashboard";
+import system from "./modules/system";
 import front from "./front/front";
 
 
@@ -22,7 +23,8 @@ export declare type MenuRouteObject ={
  * 登录成功之后的路由和菜单配置
  */
 const portalRouters: MenuRouteObject[] = [
-    {...welcome}
+    {...dashboard},
+    {...system},
 ]
 
 

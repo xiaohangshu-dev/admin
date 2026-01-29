@@ -12,27 +12,28 @@ import Sider from "antd/es/layout/Sider";
 const MySider: React.FC = () => {
 
     let {pathname} = useLocation();
+    console.log("MySider pathname: ", pathname);
 
     const {
         token: {colorBgContainer},
     } = theme.useToken();
 
     const navigate = useNavigate();
-    const childMenuItems: MenuItem[] | null = useChildMenuItems(pathname);
+    const menuItems: MenuItem[] | null = useMenuItems(false);
 
-    console.log("childMenuItems: ", childMenuItems);
+    console.log("menuItems: ", menuItems);
 
     let selectMenuKeys: string[] = [];
-    if (childMenuItems) {
-        let menuItems = childMenuItems;
-        while (menuItems) {
+    if (menuItems) {
+        let items = menuItems;
+        while (items) {
             let needMatchChildren = false;
-            for (let menuItem of menuItems) {
+            for (let menuItem of items  ) {
                 if (pathname.startsWith(menuItem!.key + "/") || pathname === menuItem!.key) {
                     selectMenuKeys.push(menuItem!.key as string);
                     if (menuItem.children) {
                         needMatchChildren = true;
-                        menuItems = menuItem.children;
+                        items = menuItem.children;
                         break;
                     }
                 }
@@ -49,13 +50,13 @@ const MySider: React.FC = () => {
 
     return (
         <>
-            {childMenuItems && childMenuItems.length > 0 ? <Sider width={200} style={{background: colorBgContainer}}>
+            {menuItems && menuItems.length > 0 ? <Sider width={240} style={{background: colorBgContainer}}>
                 <Menu
                     mode="inline"
                     defaultSelectedKeys={selectMenuKeys}
                     defaultOpenKeys={selectMenuKeys}
                     style={{height: '100%', color:"#777"}}
-                    items={childMenuItems}
+                    items={menuItems}
                     onClick={handlerItemClick}
                 />
             </Sider> : <div/>}

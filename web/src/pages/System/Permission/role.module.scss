@@ -1,0 +1,24 @@
+.operate {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.role {
+    width: 350px;
+    // 均匀分布
+    display: flex;
+    justify-content: space-between;
+
+}
+
+.page {
+    width: 240px;
+    // 均匀分布
+    display: flex;
+    justify-content: space-between;
+    input{
+        width: 200px;
+    }
+}

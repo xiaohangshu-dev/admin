@@ -29,9 +29,9 @@ const Portal: React.FC = () => {
                         background: colorBgContainer,
                     }}
                     >
-                        <CheckPerms>
+                        {/* <CheckPerms> */}
                             <Outlet/>
-                        </CheckPerms>
+                        {/* </CheckPerms> */}
                     </Content>
                 </Layout>
             </Layout>

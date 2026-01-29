@@ -1,31 +1,42 @@
 .header {
   height: 48px;
   line-height: 48px;
+  padding-inline:0px;
   background: linear-gradient(90deg, rgb(15 31 74), rgb(18 71 139), rgb(27 117 201));
 }
 
 .header .ant-layout-header {
   height: 48px;
   line-height: 48px;
+
 }
 
 .logo {
-
   float: left; 
-  width: 200px; 
+  width: 240px; 
   height: 31px;
-  margin: 8px 24px 8px 0; // 上右下左
-
+  margin: 8px 0px 8px 0; // 上右下左
   // 图片上下居中
   display: flex;
   // span文字上下居中
   align-items: center;
-  color: gray;
+  color: #fff;
   font-weight: bold;
-
+  // 内容居中
+  justify-content: center;
   // 图片与文字间距
   img {
     margin-right: 8px;
   }
 
 }
+
+.menuFoldIcon {
+  display: flex;
+  align-items: center;
+  font-size: 18px;
+  height: 100% ;
+  width: 50px;
+  justify-content: space-between;
+  color: #fff;
+} 

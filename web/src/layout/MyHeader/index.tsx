@@ -5,11 +5,16 @@ import { useTranslation } from "react-i18next";
 import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../Portal/portal.module.scss";
 import {
-    BellOutlined, ExportOutlined, GithubOutlined, MoreOutlined,
-    QuestionCircleOutlined,
-    SearchOutlined, SettingOutlined,
+    BellOutlined,
+    ExportOutlined,
+    GithubOutlined,
+    MoreOutlined,
+    SettingOutlined,
     TranslationOutlined,
-    UserOutlined
+    UserOutlined,
+    MenuFoldOutlined,
+    ReloadOutlined
+
 } from "@ant-design/icons";
 import { Header } from "antd/es/layout/layout";
 
@@ -19,7 +24,6 @@ import zhCN from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
 import { useAppDispatch } from "../../store/hooks";
-import { setLocale } from "../../store/slices/appGlobalSlice";
 import { SettingsContext } from "../../context/settings";
 import { loggedOut } from "../../store/slices/authSlice";
 import reactLogo from '../../assets/react.svg';
@@ -138,18 +142,19 @@ const MyHeader: React.FC = () => {
 
 
     return (
-        <Header className={styles.header}>
+        <Header className={styles.header} >
             <div className={styles.logo}>
                 <img src={reactLogo} alt="logo" />
                 <span>小航书 Admin</span>
             </div>
-            <Space align={"center"} size={"middle"} style={{ display: "flex", justifyContent: "space-between" }}>
 
-                <Menu theme={"dark"} style={{ background: "#00000000", minWidth: "500px" }} mode="horizontal"
-                    defaultSelectedKeys={[menuKey]}
-                    items={topMenus}
-                    onClick={handlerTopItemClick}
-                />
+            <Space align={"center"} size={"middle"} style={{ display: "flex", justifyContent: "space-between", paddingInline: "24px" }}>
+                {/* 菜单折叠: 大小 24px 上下剧中 */}
+                <div className={styles.menuFoldIcon}>
+                    <MenuFoldOutlined />
+                    <ReloadOutlined />
+                </div>
+
 
                 <Space align={"center"} size={"large"}
                     style={{ textAlign: "right", color: "#fff" }}>

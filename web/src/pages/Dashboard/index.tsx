@@ -3,7 +3,7 @@ import welcome from "../../assets/images/welcome.png";
 
 
 
-const Welcome: React.FC = () => {
+const Dashboard: React.FC = () => {
     return (
         <div style={{textAlign:"center"}}>
             <img src={welcome} style={{maxWidth:"60%"}}/>
@@ -12,4 +12,4 @@ const Welcome: React.FC = () => {
     );
 };
 
-export default Welcome;
+export default Dashboard;

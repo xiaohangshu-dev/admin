@@ -1,8 +1,40 @@
 {
   "page2": "页面",
   "menu": {
-    "home": "首页",
-    "user management": "用户管理",
-    "system management": "系统管理"
+    "dashboard": {
+      "name": "Dashboard",
+      "workplace": "工作台",
+      "analysis": "分析页",
+      "monitor": "监控页"
+    },
+    "common":{
+      "add": "添加",
+      "import": "导入",
+      "delete": "删除",
+      "edit": "编辑",
+      "search_placeholder": "请输入搜索内容",
+      "expand": "展开",
+      "collapse": "收起",
+      "refresh":"刷新"
+    },
+    "system": {
+      "name": "系统管理",
+      "user": {
+        "name": "用户管理",
+        "search_placeholder": "账号/用户名称/手机号"
+      },
+      "role": {
+        "name": "角色管理",
+        "search_placeholder": "角色名称/角色标识"
+      },
+      "permission": {
+        "name":"权限管理",
+        "search_placeholder":"权限名称/权限标识"
+      },
+      "application": {
+        "name":"应用管理",
+        "search_placeholder":"应用名称"
+      }
+    }
   }
 }
