@@ -20,6 +20,8 @@ const MySider: React.FC = () => {
     const navigate = useNavigate();
     const childMenuItems: MenuItem[] | null = useChildMenuItems(pathname);
 
+    console.log("childMenuItems: ", childMenuItems);
+
     let selectMenuKeys: string[] = [];
     if (childMenuItems) {
         let menuItems = childMenuItems;

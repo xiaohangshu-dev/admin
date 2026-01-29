@@ -10,10 +10,22 @@
 }
 
 .logo {
-  float: left;
-  width: 120px;
-  height: 31px;
-  margin: 8px 24px 8px 0;
-  background: rgba(255, 255, 255, 0.3);
-}
 
+  float: left; 
+  width: 200px; 
+  height: 31px;
+  margin: 8px 24px 8px 0; // 上右下左
+
+  // 图片上下居中
+  display: flex;
+  // span文字上下居中
+  align-items: center;
+  color: gray;
+  font-weight: bold;
+
+  // 图片与文字间距
+  img {
+    margin-right: 8px;
+  }
+
+}

@@ -1,8 +1,8 @@
-import React, {useContext, useState} from 'react';
-import {Avatar, Badge, Card, ConfigProvider, Dropdown, Input, Menu, MenuProps, Space, TabPaneProps, Tabs} from 'antd';
-import {getFirstChildPathByParent, useMenuItems} from "../../routers/router";
-import {useTranslation} from "react-i18next";
-import {useLocation, useNavigate} from "react-router-dom";
+import React, { useContext, useState } from 'react';
+import { Avatar, Badge, Card, ConfigProvider, Dropdown, Input, Menu, MenuProps, Space, TabPaneProps, Tabs } from 'antd';
+import { getFirstChildPathByParent, useMenuItems } from "../../routers/router";
+import { useTranslation } from "react-i18next";
+import { useLocation, useNavigate } from "react-router-dom";
 import styles from "../Portal/portal.module.scss";
 import {
     BellOutlined, ExportOutlined, GithubOutlined, MoreOutlined,
@@ -11,17 +11,18 @@ import {
     TranslationOutlined,
     UserOutlined
 } from "@ant-design/icons";
-import {Header} from "antd/es/layout/layout";
+import { Header } from "antd/es/layout/layout";
 
-import type {Locale} from 'antd/es/locale';
+import type { Locale } from 'antd/es/locale';
 import enUS from 'antd/locale/en_US';
 import zhCN from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
 import 'dayjs/locale/zh-cn';
-import {useAppDispatch} from "../../store/hooks";
-import {setLocale} from "../../store/slices/appGlobalSlice";
-import {SettingsContext} from "../../context/settings";
-import {loggedOut} from "../../store/slices/authSlice";
+import { useAppDispatch } from "../../store/hooks";
+import { setLocale } from "../../store/slices/appGlobalSlice";
+import { SettingsContext } from "../../context/settings";
+import { loggedOut } from "../../store/slices/authSlice";
+import reactLogo from '../../assets/react.svg';
 
 interface Tab extends Omit<TabPaneProps, 'tab'> {
     key: string;
@@ -35,7 +36,7 @@ interface Tab extends Omit<TabPaneProps, 'tab'> {
 const MyHeader: React.FC = () => {
 
     const navigate = useNavigate();
-    const {pathname} = useLocation();
+    const { pathname } = useLocation();
 
     const topMenus = useMenuItems(true);
     let menuKey: string = '';
@@ -46,7 +47,7 @@ const MyHeader: React.FC = () => {
     }
 
 
-    const {t, i18n} = useTranslation();
+    const { t, i18n } = useTranslation();
 
 
     function handlerTopItemClick(item: { key: string }) {
@@ -54,7 +55,7 @@ const MyHeader: React.FC = () => {
         navigate(firstChildPath ? firstChildPath : item.key);
     }
 
-    const {setLocale} = useContext(SettingsContext);
+    const { setLocale } = useContext(SettingsContext);
     const handlerChangeLang = (e: { key: string }) => {
         i18n.changeLanguage(e.key)
         dayjs.locale(e.key);
@@ -86,18 +87,18 @@ const MyHeader: React.FC = () => {
     const avatarItems: MenuProps['items'] = [
         {
             key: '1',
-            label: <><UserOutlined/> 个人中心</>,
+            label: <><UserOutlined /> 个人中心</>,
         },
         {
             key: '2',
-            label: <> <SettingOutlined/> 个人设置</>,
+            label: <> <SettingOutlined /> 个人设置</>,
         },
         {
             type: 'divider',
         },
         {
             key: 'loggedOut',
-            label: <>  <ExportOutlined/> 退出登录</>,
+            label: <>  <ExportOutlined /> 退出登录</>,
             onClick: handlerUserMenus
         },
     ];
@@ -138,29 +139,32 @@ const MyHeader: React.FC = () => {
 
     return (
         <Header className={styles.header}>
-            <div className={styles.logo}/>
-            <Space align={"center"} size={"middle"} style={{display: "flex", justifyContent: "space-between"}}>
+            <div className={styles.logo}>
+                <img src={reactLogo} alt="logo" />
+                <span>小航书 Admin</span>
+            </div>
+            <Space align={"center"} size={"middle"} style={{ display: "flex", justifyContent: "space-between" }}>
 
-                <Menu theme={"dark"} style={{background: "#00000000", minWidth: "500px"}} mode="horizontal"
-                      defaultSelectedKeys={[menuKey]}
-                      items={topMenus}
-                      onClick={handlerTopItemClick}
+                <Menu theme={"dark"} style={{ background: "#00000000", minWidth: "500px" }} mode="horizontal"
+                    defaultSelectedKeys={[menuKey]}
+                    items={topMenus}
+                    onClick={handlerTopItemClick}
                 />
 
                 <Space align={"center"} size={"large"}
-                       style={{textAlign: "right", color: "#fff"}}>
+                    style={{ textAlign: "right", color: "#fff" }}>
                     <Input
                         placeholder="Search ..."
                     />
 
                     <a href="https://github.com/lxhanghub/react-develop-template" target="_blank"
-                       style={{color: "#fff"}}>
-                        <GithubOutlined style={{fontSize: "16px"}}/>
+                        style={{ color: "#fff" }}>
+                        <GithubOutlined style={{ fontSize: "16px" }} />
                     </a>
 
-                    <Dropdown menu={{items: langItems}} placement="bottom">
+                    <Dropdown menu={{ items: langItems }} placement="bottom">
                         <div>
-                            <TranslationOutlined style={{fontSize: "16px"}}/>
+                            <TranslationOutlined style={{ fontSize: "16px" }} />
                         </div>
                     </Dropdown>
 
@@ -183,19 +187,19 @@ const MyHeader: React.FC = () => {
                     }>
                         <div>
                             <Badge count={5} size={"small"}>
-                                <BellOutlined style={{fontSize: "16px", color: "#fff"}}/>
+                                <BellOutlined style={{ fontSize: "16px", color: "#fff" }} />
                             </Badge>
                         </div>
                     </Dropdown>
 
-                    <Dropdown menu={{items: avatarItems}} placement="bottomRight">
-                        <div style={{fontSize: "14px"}}>
-                            <Avatar icon={<UserOutlined/>}/> Michael Yang
+                    <Dropdown menu={{ items: avatarItems }} placement="bottomRight">
+                        <div style={{ fontSize: "14px" }}>
+                            <Avatar icon={<UserOutlined />} /> Michael Yang
                         </div>
                     </Dropdown>
 
 
-                    <MoreOutlined style={{fontSize: "18px"}}/>
+                    <MoreOutlined style={{ fontSize: "18px" }} />
                 </Space>
 
             </Space>
