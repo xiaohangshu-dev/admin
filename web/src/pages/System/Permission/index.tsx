@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import welcome from "../../../assets/images/welcome.png";
-import { Button, Input, Table, TableColumnsType, TableProps } from 'antd';
+import { Button, Input, Space, Table, TableColumnsType, TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { CaretDownOutlined, DeleteOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TableOutlined } from '@ant-design/icons';
 import styles from "./role.module.scss";
 
 
@@ -129,21 +129,19 @@ const Permission: React.FC = () => {
     return (
         <>
             <div className={styles.operate}>
-
-                <div className={styles.role}>
-                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff"  }} >{refreshText}</Button>
-                    <Button type="primary" icon={<UserAddOutlined />}>{addText}</Button>
+                <Space>
+                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
+                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
                     <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
                     <Button type="primary" danger icon={<CaretDownOutlined />} style={{ background: "purple" }}>{expandText}</Button>
-                </div>
+                </Space>
 
-                <div className={styles.page}>
+                <Space>
                     <Input placeholder={search_placeholder} />
                     <Button type='default' icon={<TableOutlined />} />
-                </div>
+                </Space>
 
-            </div>
-            
+            </div> 
             <Table<DataType>
                 columns={columns}
                 rowSelection={{ ...rowSelection, checkStrictly }}

@@ -26,6 +26,7 @@ func DependencyInjection() []fx.Option {
 		fx.Provide(roleperm.NewRoleDeleteCmdHandler),
 		fx.Provide(roleperm.NewPermDeleteCmdHandler),
 		fx.Provide(roleperm.NewApp),
+		fx.Provide(user.NewUserQueryHandler),
 	}
 
 }

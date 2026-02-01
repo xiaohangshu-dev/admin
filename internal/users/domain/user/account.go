@@ -1,6 +1,10 @@
 package user
 
 import (
+	"crypto/rand"
+	"crypto/sha256"
+	"encoding/hex"
+
 	"github.com/google/uuid"
 	"github.com/xiaohangshu-dev/admin/internal/users/domain/dic/status"
 	"github.com/xiaohangshu-dev/go-workit/pkg/ddd"
@@ -87,8 +91,15 @@ func (a *Account) SetPassword(pwd string) *Error {
 	if pwd == "" {
 		return ErrPwdEmpty
 	}
+	// 生成盐值
+	salt, err := generateSalt(6)
+	if err != nil {
+		return ErrSaltEmpty
+	}
+	a.Salt = salt
+	// 哈希密码
+	a.Pwd = hashPassword(pwd, salt)
 
-	a.Pwd = pwd
 	return nil
 }
 
@@ -111,4 +122,21 @@ func (a *Account) IsEnabled() bool {
 func (a *Account) CheckPassword(pwd string) bool {
 	// TODO: 密码加密对比
 	return a.Pwd == pwd
+}
+
+// 生成随机盐值
+func generateSalt(length int) (string, error) {
+	bytes := make([]byte, length)
+	_, err := rand.Read(bytes)
+	if err != nil {
+		return "", err
+	}
+	return hex.EncodeToString(bytes), nil
+}
+
+// 哈希密码
+func hashPassword(password, salt string) string {
+	data := password + salt
+	hash := sha256.Sum256([]byte(data))
+	return hex.EncodeToString(hash[:])
 }

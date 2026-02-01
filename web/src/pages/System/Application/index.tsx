@@ -2,7 +2,7 @@ import React from 'react';
 import welcome from "../../../assets/images/welcome.png";
 import { Button, Input, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { AppstoreAddOutlined, DeleteOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined } from '@ant-design/icons';
+import { AppstoreAddOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined } from '@ant-design/icons';
 import styles from "./user.module.scss";
 
 
@@ -54,7 +54,7 @@ const Application: React.FC = () => {
 
                 <div className={styles.user}>
                     <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
-                    <Button type="primary" icon={<AppstoreAddOutlined />}>{addText}</Button>
+                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
                     <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
                 </div>
                 <div className={styles.page}>

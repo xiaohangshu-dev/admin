@@ -31,7 +31,11 @@ type UpdateCmdHandler struct {
 	*zap.Logger
 }
 
-func NewUpdateCmdHandler(um *user.Manager, pm *roleperm.Manager, repo *gorm.DB, zap *zap.Logger) *UpdateCmdHandler {
+func NewUpdateCmdHandler(
+	um *user.Manager,
+	pm *roleperm.Manager,
+	repo *gorm.DB,
+	zap *zap.Logger) *UpdateCmdHandler {
 	return &UpdateCmdHandler{
 		um:     um,
 		pm:     pm,

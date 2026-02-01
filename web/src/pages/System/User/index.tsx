@@ -2,7 +2,7 @@ import React from 'react';
 import welcome from "../../../assets/images/welcome.png";
 import { Button, Input, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { DeleteOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { DeleteOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined } from '@ant-design/icons';
 import styles from "./user.module.scss";
 
 
@@ -12,6 +12,8 @@ const User: React.FC = () => {
     const importText = t("menu.common.import");
     const deleteText = t("menu.common.delete");
     const search_placeholder = t("menu.system.user.search_placeholder");
+    const refreshText = t("menu.common.refresh");
+
 
 
     const dataSource = [
@@ -52,8 +54,8 @@ const User: React.FC = () => {
             <div className={styles.operate}>
 
                 <div className={styles.user}>
-                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff",width: "40px"  }} />
-                    <Button type="primary" icon={<UserAddOutlined />}>{addText}</Button>
+                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} > {refreshText}</Button>
+                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
                     <Button type="default" icon={<UploadOutlined />}>{importText}</Button>
                     <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
                 </div>

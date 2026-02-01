@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import welcome from "../../../assets/images/welcome.png";
 import { Button, Input, Table, TableColumnsType, TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
-import { CaretDownOutlined, DeleteOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined, UserAddOutlined } from '@ant-design/icons';
+import { CaretDownOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TableOutlined } from '@ant-design/icons';
 import styles from "./role.module.scss";
 
 
@@ -13,6 +13,7 @@ const Role: React.FC = () => {
     const search_placeholder = t("menu.system.role.search_placeholder");
     const expandText = t("menu.common.expand");
     const collapseText = t("menu.common.collapse");
+    const refreshText = t("menu.common.refresh");
 
 
     type TableRowSelection<T extends object = object> = TableProps<T>['rowSelection'];
@@ -130,8 +131,8 @@ const Role: React.FC = () => {
             <div className={styles.operate}>
 
                 <div className={styles.role}>
-                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" ,width: "40px" }} />
-                    <Button type="primary" icon={<UserAddOutlined />}>{addText}</Button>
+                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
+                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
                     <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
                     <Button type="primary" danger icon={<CaretDownOutlined />} style={{ background: "purple" }}>{expandText}</Button>
                 </div>
