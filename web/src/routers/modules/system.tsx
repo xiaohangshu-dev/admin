@@ -25,13 +25,13 @@ const system: MenuRouteObject = {
             path: "permission",
             label: "menu.system.permission.name",
             icon: <MenuOutlined />,
-            element: lazyLoad(lazy(() => import("../../pages/System/Permission"))),
+            element: lazyLoad(lazy(() => import("../../pages/System/Perm"))),
         },
         {
             path: "application",
             label: "menu.system.application.name",
             icon: <AppstoreOutlined />,
-            element: lazyLoad(lazy(() => import("../../pages/System/Application"))),
+            element: lazyLoad(lazy(() => import("../../pages/System/App"))),
         },
     ],
 

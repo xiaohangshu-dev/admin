@@ -145,7 +145,7 @@ const MyHeader: React.FC = () => {
         <Header className={styles.header} >
             <div className={styles.logo}>
                 <img src={reactLogo} alt="logo" />
-                <span>小航书 Admin</span>
+                <span>小航后台管理</span>
             </div>
 
             <Space align={"center"} size={"middle"} style={{ display: "flex", justifyContent: "space-between", paddingInline: "24px" }}>

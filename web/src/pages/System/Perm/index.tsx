@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import welcome from "../../../assets/images/welcome.png";
-import { Button, Input, Space, Table, TableColumnsType, TableProps } from 'antd';
+import { Button, Flex, Input, Space, Table, TableColumnsType, TableProps } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { CaretDownOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, TableOutlined } from '@ant-design/icons';
-import styles from "./role.module.scss";
 
 
 const Permission: React.FC = () => {
@@ -128,26 +127,27 @@ const Permission: React.FC = () => {
 
     return (
         <>
-            <div className={styles.operate}>
-                <Space>
-                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
-                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
-                    <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
-                    <Button type="primary" danger icon={<CaretDownOutlined />} style={{ background: "purple" }}>{expandText}</Button>
-                </Space>
+            <Space vertical size={10} style={{ width: "100%" }}>
+                <Flex justify="space-between">
+                    <Space size={'small'}>
+                        <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
+                        <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
+                        <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
+                        <Button type="primary" danger icon={<CaretDownOutlined />} style={{ background: "purple" }}>{expandText}</Button>
+                    </Space>
 
-                <Space>
-                    <Input placeholder={search_placeholder} />
-                    <Button type='default' icon={<TableOutlined />} />
-                </Space>
+                    <Space size={'small'}>
+                        <Input placeholder={search_placeholder} />
+                        <Button type='default' icon={<TableOutlined />} />
+                    </Space>
 
-            </div> 
-            <Table<DataType>
-                columns={columns}
-                rowSelection={{ ...rowSelection, checkStrictly }}
-                dataSource={data}
-            />
-
+                </Flex>
+                <Table<DataType>
+                    columns={columns}
+                    rowSelection={{ ...rowSelection, checkStrictly }}
+                    dataSource={data}
+                />
+            </Space>
 
         </>
     );

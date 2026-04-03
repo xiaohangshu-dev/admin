@@ -1,10 +1,8 @@
 import React from 'react';
 import welcome from "../../../assets/images/welcome.png";
-import { Button, Input, Table } from 'antd';
+import { Button, Flex, Input, Space, Table } from 'antd';
 import { useTranslation } from 'react-i18next';
 import { AppstoreAddOutlined, DeleteOutlined, PlusOutlined, ReloadOutlined, SearchOutlined, TableOutlined, UploadOutlined } from '@ant-design/icons';
-import styles from "./user.module.scss";
-
 
 const Application: React.FC = () => {
     const { t } = useTranslation();
@@ -50,25 +48,27 @@ const Application: React.FC = () => {
 
     return (
         <>
-            <div className={styles.operate}>
+            <Space vertical size={10} style={{ width: "100%" }}>
+                <Flex justify="space-between">
 
-                <div className={styles.user}>
-                    <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
-                    <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
-                    <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
-                </div>
-                <div className={styles.page}>
-                    <Input placeholder={search_placeholder} />
-                    <Button type='default' icon={<TableOutlined />} />
-                    <Button type='default' icon={<SearchOutlined />} />
-                </div>
-            </div>
-            <Table
-                dataSource={dataSource}
-                columns={columns}
-                bordered
-            />
 
+                    <Space size={'small'}>
+                        <Button type='default' icon={<ReloadOutlined />} style={{ background: "#40485b", color: "#fff" }} >{refreshText}</Button>
+                        <Button type="primary" icon={<PlusOutlined />}>{addText}</Button>
+                        <Button type="primary" danger icon={<DeleteOutlined />}>{deleteText}</Button>
+                    </Space>
+                    <Space size={'small'}>
+                        <Input placeholder={search_placeholder} />
+                        <Button type='default' icon={<TableOutlined />} />
+                        <Button type='default' icon={<SearchOutlined />} />
+                    </Space>
+                </Flex>
+                <Table
+                    dataSource={dataSource}
+                    columns={columns}
+                    bordered
+                />
+            </Space>
         </>
     );
 };
